@@ -1,0 +1,39 @@
+{
+  "name": "zq",
+  "version": "0.0.1",
+  "description": "",
+  "main": "zq.js",
+  "scripts": {
+    "dev": "webpack-dev-server --inline --progress --config build/dev.conf.js",
+    "build": "node build/build.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "address": "^1.1.2",
+    "default-gateway": "^6.0.2",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "html-webpack-plugin": "^4.4.1",
+    "ora": "^5.1.0",
+    "portfinder": "^1.0.28",
+    "rimraf": "^3.0.2",
+    "semver": "^7.3.2",
+    "shelljs": "^0.8.4",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^5.1.4"
+  },
+  "dependencies": {
+    "chalk": "^4.1.0"
+  },
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}
