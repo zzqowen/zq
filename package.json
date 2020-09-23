@@ -10,29 +10,48 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/plugin-transform-runtime": "^7.11.5",
+    "@babel/preset-env": "^7.11.5",
     "address": "^1.1.2",
+    "autoprefixer": "^10.0.0",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^4.3.0",
     "default-gateway": "^6.0.2",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "html-webpack-plugin": "^4.4.1",
+    "less": "^3.12.2",
+    "less-loader": "^7.0.1",
+    "mini-css-extract-plugin": "^0.11.2",
+    "node-notifier": "^8.0.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.4",
     "ora": "^5.1.0",
     "portfinder": "^1.0.28",
+    "postcss": "^8.0.7",
+    "postcss-import": "^12.0.1",
+    "postcss-loader": "^4.0.2",
+    "postcss-url": "^8.0.0",
     "rimraf": "^3.0.2",
     "semver": "^7.3.2",
     "shelljs": "^0.8.4",
+    "style-loader": "^1.2.1",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "url-loader": "^4.1.0",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^5.1.4"
   },
   "dependencies": {
-    "chalk": "^4.1.0"
+    "chalk": "^4.1.0",
+    "hash-sum": "^2.0.0"
   },
   "engines": {
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
   },
   "browserslist": [
-    "> 1%",
+    "> 0.01%",
     "last 2 versions",
     "not ie <= 8"
   ]

@@ -1,4 +1,5 @@
 "use strict"
+process.env.NODE_ENV = "development";
 const path = require("path");
 const {
   merge
@@ -6,13 +7,22 @@ const {
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require("portfinder");
+const webpack = require("webpack");
+const utils = require("./utils");
 const config = require("../config");
 const baseConfig = require("./base.conf");
+
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
 const webpackConfig = merge(baseConfig, {
+  module: {
+    rules: utils.styleLoaders({
+      sourceMap: config.dev.cssSourceMap,
+      usePostCSS: true
+    })
+  },
   devServer: {
     clientLogLevel: 'warning',
     historyApiFallback: {
@@ -39,10 +49,11 @@ const webpackConfig = merge(baseConfig, {
     }
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
-      inject: true,
+      inject: "head",
       title: 'zq测试'
     }),
   ]
@@ -64,8 +75,8 @@ module.exports = new Promise((resolve, reject) => {
         compilationSuccessInfo: {
           messages: [`Your application is running here: http://${webpackConfig.devServer.host}:${port}`],
         },
-        // onErrors: config.dev.notifyOnErrors ?
-        //   utils.createNotifierCallback() : undefined
+        onErrors: config.dev.notifyOnErrors ?
+          utils.createNotifierCallback() : undefined
       }))
 
       resolve(webpackConfig)

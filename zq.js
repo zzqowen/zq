@@ -1,8 +1,9 @@
-console.log('zq1')
+import scroll from "@/scroll";
+import alert from "@/alert";
+import toast from "@/toast";
 
-var f = () => {
-  console.log('开始');
-
-
+export default {
+  scroll,
+  alert,
+  toast
 }
-f();
