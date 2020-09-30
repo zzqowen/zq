@@ -1,30 +1,94 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    #aa {
+      height: 200px;
+    }
+  </style>
+  <script>
+    function ajax(obj) {
+      var xhr = new XMLHttpRequest();
+      var dataStr = '';
+      for (var i in obj.data) {
+        dataStr += i + '=' + obj.data[i] + '&';
+      }
+      dataStr = dataStr.substring(0, dataStr.length - 1);
+      xhr.timeout = 3000;
+      xhr.open('post', obj.url + '?' + dataStr, true)
+      xhr.send();
+      xhr.onreadystatechange = function (e) {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          var res = JSON.parse(xhr.responseText)
+          obj.success && obj.success(res);
+        } else {
+          obj.fail && obj.fail();
+        }
+      }
+
+      xhr.onerror = function (error) {
+        obj.fail && obj.fail(error);
+      }
+
+      xhr.ontimeout = function (error) {
+        obj.fail && obj.fail(error);
+      }
+    }
+  </script>
 </head>
+
 <body>
-  <div id="aa">
-    lajldjflasjf立刻就爱上了房间爱上了咖啡就暗示法
-    lajldjflasjf立刻就爱上了房间爱上了咖啡就暗示法
-    lajldjflasjf立刻就爱上了房间爱上了咖啡就暗示法
-    lajldjflasjf立刻就爱上了房间爱上了咖啡就暗示法
-    lajldjflasjf立刻就爱上了房间爱上了咖啡就暗示法
-    lajldjflasjf立刻就爱上了房间爱上了咖啡就暗示法
-    lajldjflasjf立刻就爱上了房间爱上了咖啡就暗示法
-    lajldjflasjf立刻就爱上了房间爱上了咖啡就暗示法
+  <div id="ddd"> </div>
+  <!-- <div id="aa">
+    lajldjflasjf立刻就爱上了房间爱上了咖啡就暗示法ljasfklaslfjaslasjdflasjfljasldfsljflasjlfkdajklj
     lajldjflasjf立刻就爱上了房间爱上了咖啡就暗示法<br/>
     <div>来拉客绝对是立刻就暗示法</div>
-  </div>
+    <div>来拉客绝对是立刻就暗示法</div>
+    <div>来拉客绝对是立刻就暗示法</div>
+    <div>来拉客绝对是立刻就暗示法</div>
+    <div>来拉客绝对是立刻就暗示法</div>
+    <div>来拉客绝对是立刻就暗示法</div>
+    <div>来拉客绝对是立刻就暗示法</div>
+    <div>来拉客绝对是立刻就暗示法</div>
+    <div>来拉客绝对是立刻就暗示法</div>
+    <div>来拉客绝对是立刻就暗示法</div>
+    <div>来拉客绝对是立刻就暗示法</div>
+    <div>来拉客绝对是立刻就暗示法</div>
+  </div> -->
   <div onclick="show()">开始吧</div>
   <script>
-    var show = function() {
-      $zq.toast("开始吧")
+    ajax({
+      url: "/api/api/python",
+      data: {
+        branches: 0
+      },
+      success: function(res) {
+        console.log(res);
+      },
+      fail: function(error) {
+        console.log(error);
+      }
+    })
+    var show = function () {
+      $zq.dialog.alert('dddd')
+      // console.log('kkkk')
     };
 
-    $zq.scroll("aa")
+    // var a = $zq.scroll("aa")
+
+    // setTimeout(() => {
+    //   a.scrollTo({value: 60})
+    // }, 3000)
+    // function cancel() {
+    //   console.log('cancel');
+    // }
+    // var l = '<button class="zq-button zq-button--small" onclick="cancel">取消</button>';
+    // document.getElementById('ddd').innerHTML  = l;
   </script>
 </body>
+
 </html>

@@ -3,21 +3,24 @@ import {
   addEventListener,
   removeEventListener
 } from "../compatibility";
-import {likeArrToArr} from "../tool";
+import {
+  isUndefined,
+  likeArrToArr
+} from "../tool";
 
-const createElement = (tag) => {
+export const createElement = (tag) => {
   return document.createElement(tag);
 }
 
-const appendNode = (parentNode, childNode) => {
+export const appendNode = (parentNode, childNode) => {
   parentNode.appendChild(childNode);
 }
 
-const removeNode = (parentNode, childNode) => {
+export const removeNode = (parentNode, childNode) => {
   parentNode.removeChild(childNode);
 }
 
-const setClassList = (node, classStr, type) => {
+export const setClassList = (node, classStr, type) => {
   if (type === "replace") {
     node.setAttribute("class", classStr);
   } else if (type === "remove") {
@@ -28,7 +31,7 @@ const setClassList = (node, classStr, type) => {
   }
 }
 
-const domView = (ele) => {
+export const domView = (ele) => {
   ele.css = (attr, val) => {
     if (val) {
       ele.style[attr] = val;
@@ -45,30 +48,43 @@ const domView = (ele) => {
   return ele;
 }
 
-const addEvent = (ele, ev, fun) => {
-  addEventListener(ele, ev, fun)
+export const addEvent = (ele, ev, fun, modifiers) => {
+
+  let evListen = (e) => {
+    let eve = e || window.event;
+    switch (modifiers) {
+      case "self":
+        if (eve.target == ele) fun(eve);
+        break;
+      case "once":
+        delEvent(ele, ev, evListen);
+        fun(eve);
+        break;
+      case "prevent":
+        eve.preventDefault(); //阻止默认事件
+        fun(eve);
+        break;
+      case "stop":
+        eve.stopPropagation(); //阻止冒泡
+        fun(eve);
+        break;
+      default:
+        fun(eve)
+        break;
+    }
+  };
+  addEventListener(ele, ev, evListen);
 }
 
-const delEvent = (ele, ev, fun) => {
+export const delEvent = (ele, ev, fun) => {
   removeEventListener(ele, ev, fun)
 }
 
-const getChildNodes = (parent) => {
+export const getChildNodes = (parent) => {
   let fragment = document.createDocumentFragment();
   let arr = likeArrToArr(parent.childNodes);
   for (var j = 0; j < arr.length; j++) {
     fragment.appendChild(arr[j])
   };
   return fragment;
-}
-
-export {
-  createElement,
-  appendNode,
-  removeNode,
-  domView,
-  setClassList,
-  addEvent,
-  delEvent,
-  getChildNodes
 }

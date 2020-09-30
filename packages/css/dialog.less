@@ -1,0 +1,50 @@
+@import "./common/init.less";
+@import "./button.less";
+
+.zq-dialog-box {
+  position: fixed;
+  .trbl;
+  text-align: center;
+  // background-color: @dialog-bg;
+
+  .zq-dialog-wrap {
+    display: inline-block;
+    width: 420px;
+    padding-bottom: 10px;
+    vertical-align: middle;
+    background-color: @white;
+    border-radius: 4px;
+    border: 1px solid @dialog-box-border;
+    font-size: 18px;
+    box-shadow: 0 2px 12px 0 @dialog-shadow;
+    text-align: left;
+    overflow: hidden;
+    backface-visibility: hidden;
+
+    .zq-dialog-head {
+      position: relative;
+      padding: 15px 15px 10px;
+
+      .zq-dialog-head__title {
+        padding-left: 0;
+        margin-bottom: 0;
+        font-size: 18px;
+        line-height: 1;
+        color: @dialog-title;
+      }
+    }
+
+    .zq-dialog-content {
+      padding: 10px 15px;
+      color: @dialog-content;
+      font-size: 14px;
+    }
+
+    .zq-dialog-btns {
+      padding: 5px 15px 0;
+      text-align: right;
+    }
+  }
+
+  .ibm;
+}

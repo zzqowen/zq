@@ -1,8 +1,17 @@
+@import "./common/init.less";
+
+@scroll-size: 6px;
+@scroll-space: 2px;
+
 .zq-scroll-box {
   position: relative;
-  height: 200px;
-  width: 80%;
-  margin: 0 auto;
+
+  &:hover .zq-scrollbar__bar,
+  &:active .zq-scrollbar__bar,
+  &:focus .zq-scrollbar__bar {
+    opacity: 1;
+    transition: opacity .34s ease-out;
+  }
 
   .zq-scroll-view {
     overflow: hidden;
@@ -11,47 +20,55 @@
     .zq-scroll-wrap {
       overflow: scroll;
       height: 100%;
-      border: 1px solid black;
       margin-right: -17px;
       margin-bottom: -17px;
+    }
+  }
 
-      .zq-scrollbar__bar {
-        position: absolute;
-        bottom: 2px;
-        right: 2px;
-        border-radius: 3px;
-        background-color: #ccc;
+  .zq-scrollbar__bar {
+    position: absolute;
+    bottom: @scroll-space;
+    right: @scroll-space;
+    background-color: transparent;
+    opacity: 0;
+    transition: opacity .12s ease-out;
 
-        &:hover .zq-scrollbar__thumb {
-          background-color: black;
-          cursor: pointer;
-        }
+    &:hover .zq-scrollbar__thumb {
+      background-color: @scroll-thumb-hover;
+      .cursor(pointer);
+    }
 
-        &.zq-scrollbar__vertical {
-          width: 6px;
-          top: 2px;
-        }
+    &.zq-scrollbar__vertical {
+      width: @scroll-size;
+      top: @scroll-space;
+    }
 
-        &.zq-scrollbar__horizontal {
-          height: 6px;
-          left: 2px;
-        }
+    &.zq-scrollbar-both__vertical {
+      bottom: @scroll-size + @scroll-space;
+    }
 
-        .zq-scrollbar__thumb {
-          background-color: #999;
-          border-radius: 3px;
-          position: absolute;
-          top: 0;
-          left: 0;
+    &.zq-scrollbar__horizontal {
+      height: @scroll-size;
+      left: @scroll-space;
+    }
 
-          &.zq-scrollbar-thumb__horizontal {
-            height: 100%;
-          }
+    &.zq-scrollbar-both__horizontal {
+      right: @scroll-size + @scroll-space;
+    }
 
-          &.zq-scrollbar-thumb__vertical {
-            width: 100%;
-          }
-        }
+    .zq-scrollbar__thumb {
+      background-color: @scroll-thumb;
+      border-radius: @scroll-size/2;
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      &.zq-scrollbar-thumb__horizontal {
+        height: 100%;
+      }
+
+      &.zq-scrollbar-thumb__vertical {
+        width: 100%;
       }
     }
   }

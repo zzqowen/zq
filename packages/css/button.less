@@ -1,0 +1,48 @@
+@import "./common/init.less";
+
+@button-name: zq-button;
+@button-list: default, primary, success, warning, danger, info;
+
+.@{button-name} {
+  display: inline-block;
+  line-height: 1;
+  white-space: nowrap;
+  .cursor(pointer);
+  border: 1px solid @button-border-default;
+  -webkit-appearance: none;
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  margin: 0;
+  transition: .1s;
+  font-weight: 500;
+  user-select: none;
+  padding: 12px 20px;
+  border-radius: 4px;
+
+  &.@{button-name}--small {
+    padding: 9px 15px;
+    font-size: @small-size;
+    border-radius: 3px;
+  }
+
+  .btnStyle;
+
+  .loopType(@i) when (@i < length(@button-list) + 1) {
+    @val: extract(@button-list, @i);
+
+    //&.zq-button--default or &.zq-button--primary and so on
+    &.@{button-name}--@{val} {
+      .btnStyle(@val);
+
+      &.is-plain {
+        .btnStyle(@val, true);
+      }
+    }
+
+    .loopType(@i + 1);
+  }
+
+  .loopType(1);
+
+}

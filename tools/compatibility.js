@@ -1,4 +1,4 @@
-const getStyle = (ele, attr) => {
+export const getStyle = (ele, attr) => {
   if (ele.currentStyle) {
     return ele.currentStyle[attr];
   } else {
@@ -6,7 +6,7 @@ const getStyle = (ele, attr) => {
   }
 }
 
-const addEventListener = (ele, ev, fun) => {
+export const addEventListener = (ele, ev, fun) => {
   if (ele.addEventListener) {
     ele.addEventListener(ev, fun, false);
   } else if (ele.attachEvent) {
@@ -14,7 +14,7 @@ const addEventListener = (ele, ev, fun) => {
   }
 }
 
-const removeEventListener = (ele, ev, fun) => {
+export const removeEventListener = (ele, ev, fun) => {
   if (ele.removeEventListener) {
     ele.removeEventListener(ev, fun, false);
   } else if (ele.attachEvent) {
@@ -22,8 +22,14 @@ const removeEventListener = (ele, ev, fun) => {
   }
 }
 
-export {
-  getStyle,
-  addEventListener,
-  removeEventListener
+export const requestAnimationFrame = (e) => {
+  let id;
+  if (!window.requestAnimationFrame) id = setTimeout(e, 17)
+  else id = window.requestAnimationFrame(e);
+  return id;
+}
+
+export const cancelAnimationFrame = (id) => {
+  if (!window.cancelAnimationFrame) clearTimeout(id)
+  else window.cancelAnimationFrame(id)
 }

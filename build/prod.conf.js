@@ -38,14 +38,21 @@ const webpackConfig = merge(baseConfig, {
     minimizer: [
       new UglifyJsPlugin({
         uglifyOptions: {
+          ie8: true,
+          mangle: {
+            properties: false
+          },
           warnings: false,
           compress: {
             // drop_console: true,
             pure_funcs: ['console.log'] //移除console
-          }
+          },
+          output: {
+            comments: false,
+          },
         },
         sourceMap: config.build.productionSourceMap,
-        parallel: true
+        // parallel: true
       })
     ]
   }

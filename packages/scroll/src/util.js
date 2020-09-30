@@ -1,22 +1,26 @@
 var barMap = {
   vertical: {
-    offset: 'offsetHeight',
+    offset: 'offsetTop',
+    offsetSize: 'offsetHeight',
     scroll: 'scrollTop',
     scrollSize: 'scrollHeight',
     size: 'height',
     key: 'vertical',
     axis: 'Y',
     client: 'clientY',
+    clientSize: 'clientHeight',
     direction: 'top'
   },
   horizontal: {
-    offset: 'offsetWidth',
+    offset: 'offsetLeft',
+    offsetSize: 'offsetWidth',
     scroll: 'scrollLeft',
     scrollSize: 'scrollWidth',
     size: 'width',
     key: 'horizontal',
     axis: 'X',
     client: 'clientX',
+    clientSize: 'clientWidth',
     direction: 'left'
   }
 };

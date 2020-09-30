@@ -1,9 +1,9 @@
 import scroll from "@/scroll";
-import alert from "@/alert";
+import dialog from "@/dialog";
 import toast from "@/toast";
 
 export default {
   scroll,
-  alert,
+  dialog,
   toast
 }
