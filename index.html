@@ -6,6 +6,76 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      background-color: #f3f3f3;
+      font-size: 14px;
+    }
+
+    .total-box {
+      height: 100%;
+    }
+
+    .top-box {
+      height: 28px;
+      background-color: #f1f3f4;
+    }
+
+    .frida-search {
+      outline: none;
+      border: 1px solid black;
+      width: 80%;
+      margin: 10px auto;
+      display: block;
+      padding: 8px 12px;
+      border-radius: 6px;
+      height: 30px;
+      box-sizing: border-box;
+    }
+
+    .frida-btn {
+      background-color: #337ab7;
+      margin: 0 auto;
+      color: white;
+      width: 80%;
+      display: block;
+      outline: none;
+      border: none;
+      line-height: 30px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .content-box {
+      height: 100%;
+      margin-top: -28px;
+      padding-top: 28px;
+      box-sizing: border-box;
+    }
+
+    .content-left {
+      float: left;
+      width: 220px;
+      height: 100%;
+      background-color: #fafafa;
+    }
+
+    .content-right {
+      margin-left: 220px;
+      overflow: auto;
+      height: 100%;
+      background-color: #2e2e2e;
+      color: white;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
     #aa {
       height: 200px;
     }
@@ -23,7 +93,12 @@
       xhr.send();
       xhr.onreadystatechange = function (e) {
         if (xhr.readyState == 4 && xhr.status == 200) {
-          var res = JSON.parse(xhr.responseText)
+          var res = "";
+          try {
+            res = JSON.parse(xhr.responseText)
+          } catch (error) {
+            res = xhr.responseText
+          }
           obj.success && obj.success(res);
         } else {
           obj.fail && obj.fail();
@@ -42,41 +117,45 @@
 </head>
 
 <body>
-  <div id="ddd"> </div>
-  <!-- <div id="aa">
-    lajldjflasjf立刻就爱上了房间爱上了咖啡就暗示法ljasfklaslfjaslasjdflasjfljasldfsljflasjlfkdajklj
-    lajldjflasjf立刻就爱上了房间爱上了咖啡就暗示法<br/>
-    <div>来拉客绝对是立刻就暗示法</div>
-    <div>来拉客绝对是立刻就暗示法</div>
-    <div>来拉客绝对是立刻就暗示法</div>
-    <div>来拉客绝对是立刻就暗示法</div>
-    <div>来拉客绝对是立刻就暗示法</div>
-    <div>来拉客绝对是立刻就暗示法</div>
-    <div>来拉客绝对是立刻就暗示法</div>
-    <div>来拉客绝对是立刻就暗示法</div>
-    <div>来拉客绝对是立刻就暗示法</div>
-    <div>来拉客绝对是立刻就暗示法</div>
-    <div>来拉客绝对是立刻就暗示法</div>
-    <div>来拉客绝对是立刻就暗示法</div>
-  </div> -->
-  <div onclick="show()">开始吧</div>
+  <div class="total-box">
+    <div class="top-box">
+    </div>
+    <div class="content-box">
+      <div class="content-left">
+        <input class="frida-search" type="text" id="frida-search" value="toast">
+        <button class="frida-btn" onclick="fridaConfirm()">提交</button>
+      </div>
+      <div class="content-right" id="info">
+        
+      </div>
+    </div>
+
+  </div>
   <script>
-    ajax({
-      url: "/api/api/python",
-      data: {
-        branches: 0
-      },
-      success: function(res) {
-        console.log(res);
-      },
-      fail: function(error) {
-        console.log(error);
-      }
-    })
     var show = function () {
       $zq.dialog.alert('dddd')
       // console.log('kkkk')
     };
+
+    var fsearch = document.getElementById("frida-search");
+    var info = document.getElementById("info");
+    var fridaConfirm = function () {
+      console.log(fsearch.value);
+      ajax({
+        url: "/api/api/python",
+        data: {
+          value: fsearch.value,
+          branches: 0
+        },
+        success: function (res) {
+          console.log(res);
+          info.innerHTML = info.innerHTML +  res + '<br/><br/>';
+        },
+        fail: function (error) {
+          console.log(error);
+        }
+      })
+    }
 
     // var a = $zq.scroll("aa")
 
