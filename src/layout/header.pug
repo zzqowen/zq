@@ -1,0 +1,9 @@
+- var navList = [{key: 'home', icon: 'home'}, {key: 'my', icon: 'folder-open'}]
+- var lang = require('../lang/lang.js').lang
+
+header.zq-header
+  nav.zq-nav.ibm
+    each val, index in navList
+      .zq-nav-item
+        i.fa(class= `fa-${val.icon}`)
+        a.zq-nav-a(href=`./${val.key}.html` title=`${lang.nav[val.key]}`)= lang.nav[val.key]

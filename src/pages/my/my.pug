@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+html(lang="zh-cn")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Document
+    script.
+      var usingPug = '999'
+      if (usingPug)
+        console.log('这是明智的选择。')
+      else
+        console.log('请用 Pug。')
+  body
+    #zq
+      include ../../layout/header.pug
+
+      block content
+      block foot
+        #footer
+          p 我就爱了就快点发垃圾地方卡就是放
+          span 啊沙发 #{ naem }
+          

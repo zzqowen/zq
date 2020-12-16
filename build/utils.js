@@ -4,12 +4,13 @@ const path = require("path");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const config = require("../config");
 const pkg = require("../package.json");
+const chalk = require("chalk");
 
 const pakDirectory = path.join(__dirname, `../${config.base.packagesRoot}`);
 
 let type = process.env.npm_config_type; //打包文件的类型，默认所有
 
-console.log(pakDirectory);
+console.log(pakDirectory, type);
 
 
 const cssLoaders = function (options) {
@@ -63,6 +64,9 @@ module.exports = {
       return path.join(__dirname, `../${pkg.main}`);
     }
   },
+  getFileName: function (url) {
+    return url.split('/').pop().split('#')[0].split('?')[0];
+  },
   assetsPath: (_path) => {
     const assetsSubDirectory = process.env.NODE_ENV === 'production' ?
       config.build.assetsSubDirectory :
@@ -86,19 +90,19 @@ module.exports = {
   createNotifierCallback: () => {
     const notifier = require('node-notifier')
 
-    return (severity, errors) => {
+    // return notifier.notify('Message');
 
+    return (severity, errors) => {
       if (severity !== 'error') return
 
       const error = errors[0]
       const filename = error.file && error.file.split('!').pop()
-
-      notifier.notify({
-        title: pkg.name,
-        message: severity + ': ' + error.name,
-        subtitle: filename || '',
-        icon: path.join(__dirname, 'logo.png')
-      })
+      console.log(chalk.red(error.webpackError))
+      // notifier.notify({
+      //   title: 'pkg.name',
+      //   message: severity 
+      // })
     }
+
   }
 }

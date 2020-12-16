@@ -1,1 +1,9 @@
-.zq-toast-box{position:absolute;bottom:20px;left:0;padding:10px;background-color:rgba(0,0,0,.1);-webkit-transform:translate(0);transform:translate(0)}
+.zq-toast-box {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+  -webkit-transform: translate(0);
+  transform: translate(0);
+}

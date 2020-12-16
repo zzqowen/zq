@@ -1,0 +1,30 @@
+@import './color.less';
+@import './foot.less';
+@import '../font-awesome-4.7.0/less/font-awesome.less';
+
+@cursor-link: url('../../images/cursor/link.ico'), auto;
+@cursor-pointer: url('../../images/cursor/pointer.ico'), pointer;
+
+blockquote, body, button, dd, dl, dt, fieldset, a, form, h1, h2, h3, h4, h5, h6, hr, div, legend, li, ol, p, pre, td, textarea, th, ul, input {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: @theme-bg;
+  font-size: @theme-font-size;
+  cursor: @cursor-link;
+}
+
+a {
+  text-decoration: none;
+  cursor: @cursor-pointer;
+}
+
+.ibm::after {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+  width: 0;
+}

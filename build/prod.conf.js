@@ -6,9 +6,14 @@ const {
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); //提取css
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin') //压缩优化css
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin') //优化js
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const baseConfig = require("./base.conf");
 const utils = require("./utils");
 const config = require("../config");
+
+function resolve(dir) {
+  return path.join(__dirname, '..', dir)
+}
 
 const webpackConfig = merge(baseConfig, {
   module: {
@@ -32,7 +37,13 @@ const webpackConfig = merge(baseConfig, {
       } : {
         safe: true
       }
-    })
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+       template: resolve('src/pages/index/index.pug'),
+      inject: true,
+      title: 'zq测试'
+    }),
   ],
   optimization: {
     minimizer: [

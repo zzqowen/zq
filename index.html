@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title></title>
   <style>
     * {
       margin: 0;
@@ -118,18 +118,17 @@
 
 <body>
   <div class="total-box">
-    <div class="top-box">
-    </div>
+    
+
     <div class="content-box">
       <div class="content-left">
         <input class="frida-search" type="text" id="frida-search" value="toast">
-        <button class="frida-btn" onclick="fridaConfirm()">提交</button>
+        <button class="frida-btn" onclick="fridaConfirm()">提 交</button>
       </div>
       <div class="content-right" id="info">
-        
+
       </div>
     </div>
-
   </div>
   <script>
     var show = function () {
@@ -149,7 +148,7 @@
         },
         success: function (res) {
           console.log(res);
-          info.innerHTML = info.innerHTML +  res + '<br/><br/>';
+          info.innerHTML = info.innerHTML + res + '<br/><br/>';
         },
         fail: function (error) {
           console.log(error);
