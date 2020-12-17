@@ -1,0 +1,18 @@
+- var { navList, toolsList } = require('src/utils/global.js');
+- var lang = require('src/lang/lang.js').lang;
+
+doctype html
+html(lang="zh-cn")
+  head
+    block meta
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title= lang.nav[key].title
+    block scripts
+  body
+    #zq
+      block header
+        include ./header.pug
+      block content
+      block footer
+        include ./footer.pug

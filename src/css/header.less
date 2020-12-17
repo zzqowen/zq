@@ -1,55 +1,86 @@
 @import './common/common.less';
 
 @header-bg: rgba(0, 0, 0, 0.1);
-@header-color: #eee;
+@header-color: @color-e;
 @header-height: 56px;
-@header-active-color: #49b1f5;
+@header-active-color: @theme-color;
 
 .zq-header {
   display: block;
   height: @header-height;
   background-color: @header-bg;
   color: @header-color;
-  position: relative;
-  padding: 0 36px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100%;
 
-  .zq-nav {
-    display: block;
+  .zq-header-box {
+    padding: 0 36px;
     height: 100%;
-    position: absolute;
-    right: 36px;
-    top: 0;
 
-    .zq-nav-item {
-      padding-left: 17px;
+    .zq-logo {
       display: inline-block;
-
-      .zq-nav-a {
-        position: relative;
+      font-size: @logo-font-size;
+      .zq-logo-text {
+        text-shadow: 0.1rem 0.1rem 0.2rem rgba(0, 0, 0, 0.15);
+        font-weight: 700;
         color: @header-color;
+        line-height: @header-height;
+      }
+    }
+
+    .zq-nav {
+      display: block;
+      height: 100%;
+      position: absolute;
+      right: 36px;
+      top: 0;
+
+      .zq-nav-item {
+        padding-left: 17px;
         display: inline-block;
-        padding: 6px 1px;
 
-        &:hover {
-          &::after {
-            width: 100%;
+        .zq-nav-a {
+          position: relative;
+          color: @header-color;
+          display: inline-block;
+          padding: 6px 1px;
+
+          .zq-nav-a-icon {
+            margin-right: 6px;
+            min-width: 15px;
           }
-        }
 
-        &::after {
-          content: '';
-          display: block;
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 0;
-          background-color: @header-active-color;
-          height: 3px;
-          border: none;
-          transition: all 0.2s;
-          z-index: -2;
+          &:hover {
+            &::after {
+              width: 100%;
+            }
+          }
+
+          &.zq-nav-a-cur {
+            &::after {
+              width: 100%;
+            }
+          }
+
+          &::after {
+            content: '';
+            display: block;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            background-color: @header-active-color;
+            height: 3px;
+            border: none;
+            transition: all 0.2s;
+            z-index: -2;
+          }
         }
       }
     }
   }
+
 }

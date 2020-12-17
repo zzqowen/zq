@@ -3,6 +3,7 @@ process.env.NODE_ENV = "production";
 const {
   merge
 } = require('webpack-merge');
+const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); //提取css
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin') //压缩优化css
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin') //优化js
@@ -38,12 +39,7 @@ const webpackConfig = merge(baseConfig, {
         safe: true
       }
     }),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-       template: resolve('src/pages/index/index.pug'),
-      inject: true,
-      title: 'zq测试'
-    }),
+    ...utils.globFile().html,
   ],
   optimization: {
     minimizer: [

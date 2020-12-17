@@ -2,9 +2,11 @@
 const fs = require("fs");
 const path = require("path");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const config = require("../config");
 const pkg = require("../package.json");
 const chalk = require("chalk");
+const glob = require('glob');
 
 const pakDirectory = path.join(__dirname, `../${config.base.packagesRoot}`);
 
@@ -56,6 +58,40 @@ const cssLoaders = function (options) {
 }
 
 module.exports = {
+  globFile: () => {
+    var _this = module.exports;
+    var allPug = glob.sync('./src/pages/**/*.pug');
+    var fileObj = {
+      entry: {},
+      html: []
+    };
+
+    allPug.forEach((item) => {
+      // console.log(item)
+      var name = _this.getFileName(item);
+      var jsPath = item.replace('.pug', '.js');
+      var key = name.split('.')[0];
+      // console.log(key)
+      var chunks = ['app'];
+      if (fs.existsSync(jsPath)) {
+        fileObj.entry[key] = jsPath;
+        chunks.push(key);
+      }
+
+      fileObj.html.push(new HtmlWebpackPlugin({
+        filename: name.replace('.pug', '.html'),
+        template: item,
+        chunks: chunks,
+        templateParameters: {
+          key: key == 'index' ? 'home' : key
+        },
+        inject: true
+      }))
+    });
+
+    // console.log(fileObj)
+    return fileObj;
+  },
   entryFile: () => {
     if (!!type) var p = path.join(pakDirectory, type, 'index.js');
     if (!!type && fs.existsSync(p)) {

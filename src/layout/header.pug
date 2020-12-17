@@ -1,9 +1,13 @@
-- var navList = [{key: 'home', icon: 'home'}, {key: 'my', icon: 'folder-open'}]
-- var lang = require('../lang/lang.js').lang
+- var { navList } = require('src/utils/global.js');
+- var lang = require('src/lang/lang.js').lang;
 
 header.zq-header
-  nav.zq-nav.ibm
-    each val, index in navList
-      .zq-nav-item
-        i.fa(class= `fa-${val.icon}`)
-        a.zq-nav-a(href=`./${val.key}.html` title=`${lang.nav[val.key]}`)= lang.nav[val.key]
+  .zq-header-box.ibm
+    .zq-logo
+      a.zq-logo-text(href="/")= lang.title
+    nav.zq-nav.ibm
+      each val, index in navList
+        .zq-nav-item
+          a.zq-nav-a(class=`${val.key == key ? 'zq-nav-a-cur' : ''}` href=`./${val.key}.html` title=`${lang.nav[val.key]}`)
+            i.fa.zq-nav-a-icon(class= `fa-${val.icon}`)
+            | #{lang.nav[val.key].label}

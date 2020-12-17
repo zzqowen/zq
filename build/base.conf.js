@@ -13,30 +13,13 @@ function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
-var allPug = glob.sync('./src/pages/**/*.pug')
-
-console.log(allPug, '了空间啊', utils.getFileName(allPug[0]))
-var entryJS = {
-  zq: utils.entryFile()
-};
-
-allPug.forEach((item) => {
-  console.log(item)
-  var name = utils.getFileName(item);
-  var jsPath = item.replace('.pug', '.js');
-  console.log(name.split('.')[0])
-  if (fs.existsSync(jsPath)) {
-    entryJS[name.split('.')[0]] = jsPath;
-  }
-})
-
-console.log(entryJS);
-
-
 module.exports = {
   mode: process.env.NODE_ENV,
   context: path.resolve(__dirname, '../'),
-  entry: entryJS,
+  entry: {
+    zq: utils.entryFile(),
+    ...utils.globFile().entry
+  },
   output: {
     path: config.build.assetsRoot,
     filename: "[name].js",
@@ -49,6 +32,7 @@ module.exports = {
     extensions: ['.js', '.json'],
     alias: {
       "@": resolve(config.base.packagesRoot),
+      "src": resolve("src"),
       "tools": resolve("tools")
     }
   },
