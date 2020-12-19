@@ -3,12 +3,22 @@ blockquote, body, button, dd, dl, dt, fieldset, a, form, h1, h2, h3, h4, h5, h6,
   padding: 0;
 }
 
-@import "./color.less";
-@import "./fontSize.less";
+@import "./var.less";
 @import "./mixins.less";
 @import "./animation.less";
 
 body {
   font-size: @normal-size;
   line-height: 1.2;
+}
+
+.one-line-ellipsis {
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.inline-block-middle {
+  .ibm();
 }

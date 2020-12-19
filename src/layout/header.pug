@@ -2,10 +2,10 @@
 - var lang = require('src/lang/lang.js').lang;
 
 header.zq-header
-  .zq-header-box.ibm
+  .zq-header-box.inline-block-middle
     .zq-logo
       a.zq-logo-text(href="/")= lang.title
-    nav.zq-nav.ibm
+    nav.zq-nav.inline-block-middle
       each val, index in navList
         .zq-nav-item
           a.zq-nav-a(class=`${val.key == key ? 'zq-nav-a-cur' : ''}` href=`./${val.key}.html` title=`${lang.nav[val.key]}`)

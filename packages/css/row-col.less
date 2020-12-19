@@ -1,0 +1,74 @@
+.zq-row {
+  .clearfix;
+}
+
+[class*="zq-col-"] {
+  position: relative;
+  float: left;
+  box-sizing: border-box;
+}
+
+.loopPoints(@pIndex: 1) when (@pIndex <=length(@--breakpoints)) {
+  @pointer-item: extract(@--breakpoints, @pIndex);
+
+  .col() {
+    .loopItem(@iIndex: 1) when (@iIndex <=length(range(@--breakpoints-range))) {
+      @value: extract(range(@--breakpoints-range), @iIndex);
+      @width-percent: (1/@--breakpoints-range * @value) * 100%;
+
+      & when (@pointer-item = 'common') {
+
+        .zq-col-@{value} {
+          width: @width-percent;
+        }
+
+        .zq-col-offset-@{value} {
+          margin-left: @width-percent;
+        }
+
+        .zq-col-pull-@{value} {
+          position: relative;
+          right: @width-percent;
+        }
+
+        .zq-col-push-@{value} {
+          position: relative;
+          left: @width-percent;
+        }
+      }
+
+      & when not (@pointer-item = 'common') {
+        @pValue: e(@pointer-item);
+
+        .zq-col-@{pValue}-@{value} {
+          width: @width-percent;
+        }
+
+        .zq-col-@{pValue}-offset-@{value} {
+          margin-left: @width-percent;
+        }
+
+        .zq-col-@{pValue}-pull-@{value} {
+          position: relative;
+          right: @width-percent;
+        }
+
+        .zq-col-@{pValue}-push-@{value} {
+          position: relative;
+          left: @width-percent;
+        }
+      }
+
+
+      .loopItem(@iIndex + 1)
+    }
+
+    .loopItem(1);
+  }
+
+  .mediaCol(@pointer-item, .col());
+
+  .loopPoints(@pIndex+1);
+}
+
+.loopPoints(1);

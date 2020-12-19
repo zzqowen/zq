@@ -18,7 +18,6 @@ let toast = (msg, durtion) => {
   setClassList(testDom, "zq-toast-box-test zq-toast-box");
   appendNode(document.body, testDom);
 
-
   let dom = createElement("div");
   let domContent = createElement("div");
   dom.id = `toast-${index}-${genId(`toast-${index}`)}`;
@@ -29,7 +28,7 @@ let toast = (msg, durtion) => {
   domView(dom).css('width', testDom.offsetWidth + 'px');
   appendNode(dom, domContent);
   appendNode(document.body, dom);
-  removeNode(document.body, testDom);
+  removeNode(testDom);
 
   setTimeout(() => {
     setClassList(dom, "opacity-trans-bottom-active");
@@ -38,7 +37,7 @@ let toast = (msg, durtion) => {
   setTimeout(() => {
     setClassList(dom, "opacity-trans-bottom-active", "remove");
     setTimeout(() => {
-      removeNode(document.body, dom);
+      removeNode(dom);
     }, 500);
   }, durtion ? durtion : 2000);
 }

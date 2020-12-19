@@ -72,7 +72,7 @@ module.exports = {
       var jsPath = item.replace('.pug', '.js');
       var key = name.split('.')[0];
       // console.log(key)
-      var chunks = ['app'];
+      var chunks = ['zq', 'app'];
       if (fs.existsSync(jsPath)) {
         fileObj.entry[key] = jsPath;
         chunks.push(key);

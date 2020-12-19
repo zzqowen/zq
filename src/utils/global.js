@@ -1,10 +1,10 @@
 export const navList = [{
   key: 'home',
   icon: 'home'
-},{
+}, {
   key: 'categories',
   icon: 'folder-open'
-},{
+}, {
   key: 'tools',
   icon: 'folder-open'
 }, {

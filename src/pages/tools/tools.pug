@@ -4,15 +4,16 @@ extends ../../layout/layout.pug
 block content
   .zq-normal-banner
   .zq-tools-content
-    .zq-tools-item-box
+    .zq-tools-list.zq-row
       each val, index in toolsList
-        a.zq-tools-item.ibm
-          .zq-tools-item-icon= val.key
-          .zq-tools-item-con
-            .zq-tools-item-title= lang.tools[val.key].title
-            .zq-tools-item-version= lang.tools[val.key].version
-            .zq-tools-item-date= lang.tools[val.key].date
-          
+        .zq-tools-item.zq-col-xs-12.zq-col-sm-8.zq-col-md-6.zq-col-lg-4.zq-col-xl-3.zq-col-24
+          a.card.zq-tools-item-box.clearfix#itemA
+            .zq-tools-item-icon
+            .zq-tools-item-con(title= lang.tools[val.key].title)
+              .zq-tools-item-title.one-line-ellipsis= lang.tools[val.key].title
+              .zq-tools-item-version= lang.tools[val.key].version
+              .zq-tools-item-date= lang.tools[val.key].date
+            
 
 
   

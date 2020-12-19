@@ -1,5 +1,4 @@
-@import './color.less';
-@import './foot.less';
+@import './var.less';
 @import '../font-awesome-4.7.0/less/font-awesome.less';
 
 @cursor-link: url('../../images/cursor/link.ico'), auto;
@@ -47,15 +46,15 @@ a {
   cursor: @cursor-pointer;
 }
 
-.ibm::after {
-  content: "";
-  display: inline-block;
-  vertical-align: middle;
-  height: 100%;
-  width: 0;
-}
-
 .zq-normal-banner {
   height: @normal-banner-height;
   background-color: @theme-banner-bg;
+}
+
+.clearfix {
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
 }

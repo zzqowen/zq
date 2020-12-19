@@ -17,16 +17,17 @@ module.exports = {
   mode: process.env.NODE_ENV,
   context: path.resolve(__dirname, '../'),
   entry: {
-    zq: utils.entryFile(),
+    // zq: utils.entryFile(),
+    app: resolve('src/app.js'),
     ...utils.globFile().entry
   },
   output: {
     path: config.build.assetsRoot,
     filename: "[name].js",
     publicPath: config.build.assetsPublicPath,
-    libraryExport: 'zq',
-    library: "$zq", //插件的名字
-    libraryTarget: "umd"
+    // libraryExport: 'zq',
+    // library: "$zq", //插件的名字
+    // libraryTarget: "umd"
   },
   resolve: {
     extensions: ['.js', '.json'],

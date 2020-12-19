@@ -1,35 +1,52 @@
 import {
   isEmpty,
-  isString
+  isString,
+  isObject,
+  isUndefined
 } from "tools/tool";
-import { isUndefined } from "tools/tool";
 import frame from "./frame";
 
 const DEFAULT_MSG = "等你很久了";
 const DEFAULT_TITLE = "温馨提示";
+const CONFIRM_TEXT = "确定";
+const CANCEL_TEXT = "取消";
+const SHOW_CANCEL = true;
+const MODAL = true;
+const MASKCLOSE = true;
 
-let initParmas = (params) => {
+let initParmas = (params, paramsT) => {
+  let defaultParams = {
+    type: 'alert',
+    title: DEFAULT_TITLE,
+    content: DEFAULT_MSG,
+    showCancel: SHOW_CANCEL,
+    cancelText: CANCEL_TEXT,
+    confirmText: CONFIRM_TEXT,
+    modal: MODAL,
+    maskClose: MASKCLOSE,
+    onCallBack: () => {
 
-}
-let dialog = (params) => {
+    }
+  };
   if (isString(params)) {
-    dialog.alert(params);
-  } else if (isUndefined(params)) {
-    dialog.alert(DEFAULT_MSG);
-  } else {
-    let {type, message, title} = params;
-    if (isUndefined(type)) throw Error('请设置弹窗类型type')
-    if (isUndefined(message)) message = DEFAULT_MSG
-    if (isUndefined(title)) title = DEFAULT_TITLE
-
-    dialog[type](message, title);
+    defaultParams.content = params;
+    defaultParams.title = isUndefined(paramsT) ? DEFAULT_TITLE : paramsT;
+  } else if (isObject(params)) {
+    defaultParams = Object.assign(defaultParams, params);
   }
+
+  return defaultParams;
+}
+
+let dialog = (params) => {
+  let dParams = initParmas(params);
+  if (dialog[dParams.type]) dialog[dParams.type](dParams);
 }
 
 dialog.alert = (msg, title) => {
-  if (isUndefined(title)) title = DEFAULT_TITLE
-  console.log(msg, isEmpty(msg));
-  let dom = frame(msg, title);
+  let dParams = initParmas(msg, title);
+  // console.log(dParams);
+  let dom = frame(dParams);
 }
 
 dialog.confirm = (msg, title) => {

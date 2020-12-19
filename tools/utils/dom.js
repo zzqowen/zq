@@ -16,8 +16,9 @@ export const appendNode = (parentNode, childNode) => {
   parentNode.appendChild(childNode);
 }
 
-export const removeNode = (parentNode, childNode) => {
-  parentNode.removeChild(childNode);
+export const removeNode = (childNode, parent) => {
+  if (childNode.parentNode) childNode.parentNode.removeChild(childNode);
+  else parent.removeChild(childNode)
 }
 
 export const setClassList = (node, classStr, type) => {
@@ -29,6 +30,13 @@ export const setClassList = (node, classStr, type) => {
   } else {
     node.setAttribute("class", (node.getAttribute("class") ? node.getAttribute("class") + " " : "") + classStr);
   }
+}
+
+export const newDom = (type, classStr, text) => {
+  let domNode = createElement(type || 'div');
+  setClassList(domNode, classStr);
+  domNode.innerHTML = text || ' ';
+  return domNode;
 }
 
 export const domView = (ele) => {

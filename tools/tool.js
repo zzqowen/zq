@@ -43,6 +43,10 @@ export const isString = function (obj) {
   return typeof obj == 'string';
 };
 
+export const isObject = function (obj) {
+  return obj !== null && typeof obj === 'object' && 'constructor' in obj && obj.constructor === Object;
+};
+
 export const isArray = function (obj) {
   return Array.isArray(obj);
 };

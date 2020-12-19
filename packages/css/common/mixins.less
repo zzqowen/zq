@@ -1,10 +1,21 @@
 .ibm() {
+  & > div, & > a, & > span, & > li {
+    vertical-align: middle;
+  }
   &::after {
     content: "";
     display: inline-block;
     height: 100%;
     width: 0;
     vertical-align: middle;
+  }
+}
+
+.clearfix() {
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
   }
 }
 
@@ -72,4 +83,45 @@
 
 .btnStyle(@type: default, @plain: false) when (@plain =true) {
   .btnPlainColor(@type);
+}
+
+.mediaCol(@type, @include) {
+  @media only screen {
+    & when (@type ='xs') {
+      @media (min-width: @--xs) {
+        @include();
+      }
+    }
+
+    & when (@type ='sm') {
+      @media (min-width: @--sm) {
+        @include();
+      }
+    }
+
+    & when (@type ='md') {
+      @media (min-width: @--md) {
+        @include();
+      }
+    }
+
+    & when (@type ='lg') {
+      @media (min-width: @--lg) {
+        @include();
+      }
+    }
+
+    & when (@type ='xl') {
+      @media (min-width: @--xl) {
+        @include();
+      }
+    }
+
+    & when (@type ='common') {
+      @include();
+    }
+
+  }
+
+
 }
