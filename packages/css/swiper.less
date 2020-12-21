@@ -1,0 +1,25 @@
+.swiper-all-full() {
+  width: 100%;
+  height: 100%;
+}
+
+.zq-swiper-container {
+  .swiper-all-full();
+  position: relative;
+  overflow: hidden;
+  background-color: @swiper-bg;
+  white-space: nowrap;
+
+  .zq-swiper-wrapper {
+    .swiper-all-full();
+
+    .zq-swiper-slide {
+      display: inline-block;
+      .swiper-all-full();
+
+      &:nth-child(2n) {
+        background-color: white;
+      }
+    }
+  }
+}

@@ -5,7 +5,7 @@ import {
   addEvent,
   delEvent
 } from 'tools/utils/dom.js';
-console.log($zq);
+console.log($zq, swiper);
 
 var adom = document.getElementById('itemA');
 addEvent(adom, 'click', (e) => {
@@ -18,3 +18,5 @@ addEvent(adom, 'click', (e) => {
     }
   });
 })
+
+$zq.swiper()
