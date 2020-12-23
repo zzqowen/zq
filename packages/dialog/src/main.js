@@ -5,6 +5,9 @@ import {
   isUndefined
 } from "tools/tool";
 import frame from "./frame";
+import {
+  ZObject
+} from 'tools/compatibility';
 
 const DEFAULT_MSG = "等你很久了";
 const DEFAULT_TITLE = "温馨提示";
@@ -32,7 +35,7 @@ let initParmas = (params, paramsT) => {
     defaultParams.content = params;
     defaultParams.title = isUndefined(paramsT) ? DEFAULT_TITLE : paramsT;
   } else if (isObject(params)) {
-    defaultParams = Object.assign(defaultParams, params);
+    defaultParams = ZObject.assign(defaultParams, params);
   }
 
   return defaultParams;

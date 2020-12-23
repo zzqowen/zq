@@ -1,3 +1,5 @@
+
+
 export const getStyle = (ele, attr) => {
   if (ele.currentStyle) {
     return ele.currentStyle[attr];
@@ -32,4 +34,24 @@ export const requestAnimationFrame = (e) => {
 export const cancelAnimationFrame = (id) => {
   if (!window.cancelAnimationFrame) clearTimeout(id)
   else window.cancelAnimationFrame(id)
+}
+
+export const ZObject = {
+  assign: function() {
+    console.log(arguments)
+    let _extends = Object.assign || function (target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    };
+
+
+    return _extends.apply(null, arguments);
+  }
 }

@@ -8,6 +8,17 @@ import {
   likeArrToArr
 } from "../tool";
 
+export const getElement = (el, context) => {
+  let dom = null;
+  if (el instanceof Object && el.nodeType === 1) {
+    dom = el;
+  } else if (typeof el == 'string') {
+    dom = isUndefined(context) ? document.querySelectorAll(el) : context.querySelectorAll(el);
+  }
+  if (!dom || dom.length == 0) throw new Error("节点不存在");
+  return dom
+}
+
 export const createElement = (tag) => {
   return document.createElement(tag);
 }
@@ -53,6 +64,19 @@ export const domView = (ele) => {
       }
     }
   }
+
+  ele.offset = () => {
+    let el = ele;
+    let box = el.getBoundingClientRect();
+    let offsetObj = {
+      top: box.top,
+      left: box.left,
+      width: box.width || el.offsetWidth,
+      height: box.height || el.offsetHeight
+    }
+    return offsetObj;
+  }
+
   return ele;
 }
 

@@ -14,11 +14,15 @@ block content
               .zq-tools-item-version= lang.tools[val.key].version
               .zq-tools-item-date= lang.tools[val.key].date
     .list-container
-      .zq-swiper-container#zq-swiper
+      .zq-swiper-container
         .zq-swiper-wrapper
           - var swiperList = [1,2,3];
-          .zq-swiper-slide
-          .zq-swiper-slide
+          .zq-swiper-slide= 1
+          .zq-swiper-slide= 2
+          .zq-swiper-slide= 3
+
+    #test
+      .a-test
 
 
             

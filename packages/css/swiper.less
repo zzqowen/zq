@@ -7,10 +7,10 @@
   .swiper-all-full();
   position: relative;
   overflow: hidden;
-  background-color: @swiper-bg;
   white-space: nowrap;
 
   .zq-swiper-wrapper {
+    background-color: @swiper-bg;
     .swiper-all-full();
 
     .zq-swiper-slide {
@@ -18,7 +18,10 @@
       .swiper-all-full();
 
       &:nth-child(2n) {
-        background-color: white;
+        background-color: red;
+      }
+      &:nth-child(2n - 1) {
+        background-color: #333;
       }
     }
   }
