@@ -19,6 +19,5 @@ export const initElParams = (arg1, arg2) => {
   console.log(el, params)
   if (!(!isEmpty(el) || !isEmpty(params.el))) throw new Error("节点不存在");
   params.el = el && !params.el ? getElement(el) : getElement(params.el);
-
   return params;
 }

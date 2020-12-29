@@ -14,7 +14,8 @@ import {
 } from "tools/time";
 
 import {
-  ZObject
+  ZObject,
+  preventDefault
 } from 'tools/compatibility';
 import {
   getElement
@@ -56,17 +57,56 @@ var touchEventsData = {
 
 let attachEvents = (dom) => {
   let touchEvent = swiperDom.touchEvents;
-  addEvent(dom, touchEvent.start, swiperDom.onTouchStart);
-  addEvent(document, touchEvent.move, swiperDom.onTouchMove);
-  addEvent(document, touchEvent.end, swiperDom.onTouchEnd);
+  initButton(dom);
+  if (swiperDom.support.touch) {
+    addEvent(dom, touchEvent.start, swiperDom.onTouchStart);
+    addEvent(dom, touchEvent.move, swiperDom.onTouchMove);
+    addEvent(dom, touchEvent.end, swiperDom.onTouchEnd);
+    // addEvent(dom, touchEvent.cancel, swiperDom.onTouchEnd);
+  } else {
+    addEvent(dom, touchEvent.start, swiperDom.onTouchStart);
+    addEvent(document, touchEvent.move, swiperDom.onTouchMove);
+    addEvent(document, touchEvent.end, swiperDom.onTouchEnd);
+  }
+
+}
+
+let initButton = (dom) => {
+  let swiperBtnPrev = getElement('.zq-swiper-button-prev', dom);
+  let swiperBtnNext = getElement('.zq-swiper-button-next', dom);
+  for (let prevKey in swiperBtnPrev) {
+    let prevItem = swiperBtnPrev[prevKey];
+    if (prevItem.nodeType == 1) {
+      addEvent(prevItem, 'touchend', swiperButtonPrevEvent, 'stop')
+    };
+  }
+
+  for (let nextKey in swiperBtnNext) {
+    let nextItem = swiperBtnNext[nextKey];
+    if (nextItem.nodeType == 1) {
+      addEvent(nextItem, 'touchend', swiperButtonNextEvent, 'stop');
+    }
+  }
+}
+
+let swiperButtonPrevEvent = () => {
+  let sIndex = activeIndex - 1 < 0 ? 0 : --activeIndex;
+  console.log('sIndex', sIndex);
+  swiperDom.slideTo(sIndex);
+}
+
+let swiperButtonNextEvent = () => {
+  let nIndex = activeIndex + 1 > childLength - 1 ? childLength - 1 : ++activeIndex;
+  console.log('nIndex', nIndex);
+  swiperDom.slideTo(nIndex)
 }
 
 let swiperDom = (el, params) => {
   console.log(el);
-  attachEvents(el)
   swiperDom.wrapperEl = domView(getElement('.zq-swiper-wrapper', el)[0]);
   childLength = swiperDom.wrapperEl.childNodes.length;
   console.log(childLength);
+  attachEvents(el)
   return el;
 }
 
@@ -121,8 +161,9 @@ swiperDom.touchEvents = (() => {
 
 swiperDom.onTouchStart = (e) => {
   // console.log(e);
-  touches.currentX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
-  touches.currentY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+  preventDefault(e);
+  touches.currentX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX || e.clientX;
+  touches.currentY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY || e.clientY;
   var startX = touches.currentX;
   var startY = touches.currentY;
   touches.startX = startX;
@@ -135,13 +176,14 @@ swiperDom.onTouchStart = (e) => {
 }
 
 swiperDom.onTouchMove = (e) => {
+  preventDefault(e);
   if (!touchEventsData.isTouched) {
     return;
   }
 
   var targetTouch = e.type === 'touchmove' && e.targetTouches && (e.targetTouches[0] || e.changedTouches[0]);
-  var pageX = e.type === 'touchmove' ? targetTouch.pageX : e.pageX;
-  var pageY = e.type === 'touchmove' ? targetTouch.pageY : e.pageY;
+  var pageX = e.type === 'touchmove' ? targetTouch.pageX : e.pageX || e.clientX;
+  var pageY = e.type === 'touchmove' ? targetTouch.pageY : e.pageY || e.clientY;
 
   touches.currentX = pageX;
   touches.currentY = pageY;
@@ -150,12 +192,14 @@ swiperDom.onTouchMove = (e) => {
   touches.diff = diffX;
   swiperDirection = diffX < 0 ? 'next' : 'prev'
 
-  console.log(defaultTransalte, '乐克乐克');
+  console.log(defaultTransalte, '乐克乐克', activeIndex);
+  if ((activeIndex == 0 && swiperDirection == 'prev') || (activeIndex == childLength - 1 && swiperDirection == 'next')) diffX /= 2;
   swiperDom.setTransition(defaultTransalte + diffX);
 }
 
 swiperDom.onTouchEnd = (e) => {
   // console.log(e);
+  preventDefault(e);
   ZObject.assign(touchEventsData, {
     isTouched: false,
     isMoved: false
@@ -168,7 +212,7 @@ swiperDom.onTouchEnd = (e) => {
   }
 
   var speed = 1;
-  if (timeDiff > 150) {
+  if (timeDiff > 200) {
     speed = 0;
   }
 
@@ -177,11 +221,11 @@ swiperDom.onTouchEnd = (e) => {
   touches.diff = diffX;
 
   let pos = swiperDom.wrapperEl.offset().width;
-
-  if (diffX + speed * pos > pos / 2) {
-    if(swiperDirection == 'next') {
+  console.log(diffX > pos / 3, diffX, pos);
+  if (Math.abs(diffX) > 30 && (diffX + speed * pos > pos / 2 || Math.abs(diffX) > pos / 2)) {
+    if (swiperDirection == 'next') {
       if (++activeIndex > childLength - 1) {
-        activeIndex = childLength -1;
+        activeIndex = childLength - 1;
       }
     } else {
       if (--activeIndex < 0) {
@@ -204,15 +248,20 @@ swiperDom.onTouchEnd = (e) => {
 
 swiperDom.setTransition = (dis, duration) => {
   console.log(dis)
-  swiperDom.wrapperEl.css('transform', 'translate(' + dis + 'px)')
-  swiperDom.wrapperEl.css('transition-duration', (duration || 0) + 'ms')
+  // swiperDom.wrapperEl.css('msTransform', 'translate(' + dis + 'px)');
+  // swiperDom.wrapperEl.css('mozTransform', 'translate(' + dis + 'px)');
+  // swiperDom.wrapperEl.css('oTransform', 'translate(' + dis + 'px)');
+  // swiperDom.wrapperEl.css('webkitTransform', 'translate(' + dis + 'px)');
+  swiperDom.wrapperEl.css('transform', 'translate(' + dis + 'px)');
+  // swiperDom.wrapperEl.css('left', dis + 'px');
+  swiperDom.wrapperEl.css('transition-duration', (duration || 0) + 'ms');
 }
 
 swiperDom.slideTo = (index) => {
   let pos = swiperDom.wrapperEl.offset().width;
   console.log(index, 'slide', pos, defaultTransalte);
   defaultTransalte = -pos * index;
-  swiperDom.setTransition(defaultTransalte, 600)
+  swiperDom.setTransition(defaultTransalte, 300)
 }
 
 

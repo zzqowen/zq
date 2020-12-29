@@ -13,7 +13,7 @@ export const getElement = (el, context) => {
   if (el instanceof Object && el.nodeType === 1) {
     dom = el;
   } else if (typeof el == 'string') {
-    dom = isUndefined(context) ? document.querySelectorAll(el) : context.querySelectorAll(el);
+    dom = isUndefined(context) || !context.querySelectorAll ? document.querySelectorAll(el) : context.querySelectorAll(el);
   }
   if (!dom || dom.length == 0) throw new Error("节点不存在");
   return dom
@@ -97,6 +97,7 @@ export const addEvent = (ele, ev, fun, modifiers) => {
         fun(eve);
         break;
       case "stop":
+        console.log(e, '阻止冒泡');
         eve.stopPropagation(); //阻止冒泡
         fun(eve);
         break;

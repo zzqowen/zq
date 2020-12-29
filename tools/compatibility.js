@@ -24,6 +24,15 @@ export const removeEventListener = (ele, ev, fun) => {
   }
 }
 
+export const preventDefault = (e) => {
+  let ev = e || window.event;
+  if (ev.preventDefault) {
+    ev.preventDefault();
+  } else {
+    ev.returnValue = false;
+  }
+}
+
 export const requestAnimationFrame = (e) => {
   let id;
   if (!window.requestAnimationFrame) id = setTimeout(e, 17)
@@ -38,7 +47,7 @@ export const cancelAnimationFrame = (id) => {
 
 export const ZObject = {
   assign: function() {
-    console.log(arguments)
+    // console.log(arguments)
     let _extends = Object.assign || function (target) {
       for (var i = 1; i < arguments.length; i++) {
         var source = arguments[i];
@@ -52,6 +61,6 @@ export const ZObject = {
     };
 
 
-    return _extends.apply(null, arguments);
+    return _extends.apply({}, arguments);
   }
 }
