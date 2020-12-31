@@ -2,7 +2,10 @@ import {
   createElement,
   appendNode,
   removeNode,
+  getChildNodes,
+  getChildNodesNodeTypeList,
   domView,
+  newDom,
   setClassList,
   addEvent
 } from "tools/utils/dom";
@@ -12,19 +15,24 @@ import {
 import {
   now
 } from "tools/time";
-
+import animation from "tools/animation";
 import {
   ZObject,
-  preventDefault
+  preventDefault,
+  getStyle
 } from 'tools/compatibility';
 import {
   getElement
 } from "../../../tools/utils/dom";
 
-var activeIndex = 0;
-var swiperDirection = 'next';
-var defaultTransalte = 0;
-var childLength = 0;
+
+let globalData = {
+  activeIndex: 0,
+  swiperDirection: 'next',
+  defaultTransalte: 0,
+  childLength: 0,
+  wrapperEl: null
+}
 
 var touches = {
   startX: 0,
@@ -57,7 +65,7 @@ var touchEventsData = {
 
 let attachEvents = (dom) => {
   let touchEvent = swiperDom.touchEvents;
-  initButton(dom);
+  // initButton(dom);
   if (swiperDom.support.touch) {
     addEvent(dom, touchEvent.start, swiperDom.onTouchStart);
     addEvent(dom, touchEvent.move, swiperDom.onTouchMove);
@@ -90,22 +98,26 @@ let initButton = (dom) => {
 }
 
 let swiperButtonPrevEvent = () => {
-  let sIndex = activeIndex - 1 < 0 ? 0 : --activeIndex;
+  let sIndex = globalData.activeIndex - 1 < 0 ? 0 : --globalData.activeIndex;
   console.log('sIndex', sIndex);
   swiperDom.slideTo(sIndex);
 }
 
 let swiperButtonNextEvent = () => {
-  let nIndex = activeIndex + 1 > childLength - 1 ? childLength - 1 : ++activeIndex;
+  let childLength = globalData.childLength;
+  let nIndex = globalData.activeIndex + 1 > childLength - 1 ? childLength - 1 : ++globalData.activeIndex;
   console.log('nIndex', nIndex);
   swiperDom.slideTo(nIndex)
 }
 
 let swiperDom = (el, params) => {
   console.log(el);
-  swiperDom.wrapperEl = domView(getElement('.zq-swiper-wrapper', el)[0]);
-  childLength = swiperDom.wrapperEl.childNodes.length;
-  console.log(childLength);
+  let wrapperElDom = newDom('div', 'zq-swiper-wrapper');
+  appendNode(wrapperElDom, getChildNodes(el));
+  appendNode(el, wrapperElDom);
+  globalData.wrapperEl = wrapperElDom;
+  globalData.childLength = getChildNodesNodeTypeList(wrapperElDom).length;
+  console.log(globalData);
   attachEvents(el)
   return el;
 }
@@ -176,6 +188,11 @@ swiperDom.onTouchStart = (e) => {
 }
 
 swiperDom.onTouchMove = (e) => {
+  let {
+    childLength,
+    defaultTransalte,
+    activeIndex
+  } = globalData;
   preventDefault(e);
   if (!touchEventsData.isTouched) {
     return;
@@ -190,14 +207,19 @@ swiperDom.onTouchMove = (e) => {
   var diffX = touches.currentX - touches.startX;
   var diffY = touches.currentY - touches.startY;
   touches.diff = diffX;
-  swiperDirection = diffX < 0 ? 'next' : 'prev'
+  globalData.swiperDirection = diffX < 0 ? 'next' : 'prev'
 
   console.log(defaultTransalte, '乐克乐克', activeIndex);
-  if ((activeIndex == 0 && swiperDirection == 'prev') || (activeIndex == childLength - 1 && swiperDirection == 'next')) diffX /= 2;
+  if ((activeIndex == 0 && globalData.swiperDirection == 'prev') || (activeIndex == childLength - 1 && globalData.swiperDirection == 'next')) diffX /= 2;
   swiperDom.setTransition(defaultTransalte + diffX);
 }
 
 swiperDom.onTouchEnd = (e) => {
+  let {
+    childLength,
+    defaultTransalte,
+    swiperDirection
+  } = globalData;
   // console.log(e);
   preventDefault(e);
   ZObject.assign(touchEventsData, {
@@ -220,20 +242,20 @@ swiperDom.onTouchEnd = (e) => {
   var diffY = touches.currentY - touches.startY;
   touches.diff = diffX;
 
-  let pos = swiperDom.wrapperEl.offset().width;
+  let pos = globalData.wrapperEl.offset().width;
   console.log(diffX > pos / 3, diffX, pos);
   if (Math.abs(diffX) > 30 && (diffX + speed * pos > pos / 2 || Math.abs(diffX) > pos / 2)) {
     if (swiperDirection == 'next') {
-      if (++activeIndex > childLength - 1) {
-        activeIndex = childLength - 1;
+      if (++globalData.activeIndex > childLength - 1) {
+        globalData.activeIndex = childLength - 1;
       }
     } else {
-      if (--activeIndex < 0) {
-        activeIndex = 0;
+      if (--globalData.activeIndex < 0) {
+        globalData.activeIndex = 0;
       }
     }
 
-    swiperDom.slideTo(activeIndex)
+    swiperDom.slideTo(globalData.activeIndex)
   } else {
     swiperDom.setTransition(defaultTransalte, 300);
   }
@@ -247,21 +269,25 @@ swiperDom.onTouchEnd = (e) => {
 }
 
 swiperDom.setTransition = (dis, duration) => {
-  console.log(dis)
-  // swiperDom.wrapperEl.css('msTransform', 'translate(' + dis + 'px)');
-  // swiperDom.wrapperEl.css('mozTransform', 'translate(' + dis + 'px)');
-  // swiperDom.wrapperEl.css('oTransform', 'translate(' + dis + 'px)');
-  // swiperDom.wrapperEl.css('webkitTransform', 'translate(' + dis + 'px)');
-  swiperDom.wrapperEl.css('transform', 'translate(' + dis + 'px)');
-  // swiperDom.wrapperEl.css('left', dis + 'px');
-  swiperDom.wrapperEl.css('transition-duration', (duration || 0) + 'ms');
+  // globalData.wrapperEl.css('msTransform', 'translate(' + dis + 'px)');
+  // globalData.wrapperEl.css('mozTransform', 'translate(' + dis + 'px)');
+  // globalData.wrapperEl.css('oTransform', 'translate(' + dis + 'px)');
+  // globalData.wrapperEl.css('webkitTransform', 'translate(' + dis + 'px)');
+  // globalData.wrapperEl.css('transform', 'translate(' + (dis  - 10 * (globalData.activeIndex + 1) )+ 'px)');
+  // globalData.wrapperEl.css('left', dis + 'px');
+  animation(parseFloat(globalData.wrapperEl.css('left')), (dis - 10 * (globalData.activeIndex + 1)), 'Quad.easeInOut', (duration || 0), (val) => {
+    globalData.wrapperEl.css('left', val + 'px');
+  })
+  // globalData.wrapperEl.css('transition-duration', (duration || 0) + 'ms');
+  // setTimeout(() => {
+  //   globalData.wrapperEl.css('transition-duration', '0ms');
+  // }, 300)
 }
 
 swiperDom.slideTo = (index) => {
-  let pos = swiperDom.wrapperEl.offset().width;
-  console.log(index, 'slide', pos, defaultTransalte);
-  defaultTransalte = -pos * index;
-  swiperDom.setTransition(defaultTransalte, 300)
+  let pos = globalData.wrapperEl.offset().width;
+  globalData.defaultTransalte = -pos * index;
+  swiperDom.setTransition(globalData.defaultTransalte, 300)
 }
 
 

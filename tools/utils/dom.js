@@ -47,7 +47,7 @@ export const newDom = (type, classStr, text) => {
   let domNode = createElement(type || 'div');
   setClassList(domNode, classStr);
   domNode.innerHTML = text || ' ';
-  return domNode;
+  return domView(domNode);
 }
 
 export const domView = (ele) => {
@@ -120,4 +120,18 @@ export const getChildNodes = (parent) => {
     fragment.appendChild(arr[j])
   };
   return fragment;
+}
+
+
+export const getChildNodesNodeTypeList = (parent, type) => {
+  let nodeType = type || 1;
+  let nodeTypeList = [];
+  let arr = likeArrToArr(parent.childNodes);
+  for (var j = 0; j < arr.length; j++) {
+    let item = arr[j];
+    if (item.nodeType == nodeType) {
+      nodeTypeList.push(item)
+    }
+  };
+  return nodeTypeList;
 }

@@ -15,26 +15,9 @@ block content
               .zq-tools-item-date= lang.tools[val.key].date
     .list-container
       .zq-swiper-container
-        .zq-swiper-wrapper
-          each val, index in [1,2,3,4,5,6,7,8,9,10]
-            .zq-swiper-slide= val
-        
-        .zq-swiper-button-prev
-        .zq-swiper-button-next
-
-
-      //- .zq-swiper-container
-      //-   .zq-swiper-wrapper
-      //-     - var swiperList = [1,2,3];
-      //-     .zq-swiper-slide= 1
-      //-     .zq-swiper-slide= 2
-      //-     .zq-swiper-slide= 3
-        
-      //-   .zq-swiper-button-prev
-      //-   .zq-swiper-button-next
-
-
-            
+          each val, index in [1,2,3,4,5,6,7,8,9]
+            .zq-swiper-slide
+              .zq-slide-box= val
 
 
   
