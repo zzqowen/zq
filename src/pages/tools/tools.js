@@ -17,6 +17,16 @@ addEvent(adom, 'click', (e) => {
       console.log(type);
     }
   });
+
+  setTimeout(() => {
+    $zq.dialog({
+      title: '老卡了登记法拉斯科技风',
+      maskClose: true,
+      onCallBack(type) {
+        console.log(type);
+      }
+    });
+  }, 2000)
 })
 
 var aa = $zq.swiper('.zq-swiper-container');

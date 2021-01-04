@@ -16,6 +16,10 @@ export default {
     categories: {
       label: '分类',
       title: '你要的我都有'
+    },
+    video: {
+      label: '影视',
+      title: '搜搜看'
     }
   },
   tools: {
