@@ -1,7 +1,7 @@
 import './video.less';
 import $zq from '@/../zq.js';
 
-$zq.video('video-zq', {}, function(e) {
+$zq.video('video-zq', {controls: true}, function(e) {
   this.src('http://vjs.zencdn.net/v/oceans.mp4')
   console.log(this);
   this.play()
