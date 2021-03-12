@@ -1,5 +1,10 @@
 import './video.less';
 import $zq from '@/../zq.js';
+import {
+  domView,
+  addEvent,
+  delEvent
+} from 'tools/utils/dom.js';
 
 // $zq.video('video-zq', {controls: true, language: 'zh-cn'}, function(e) {
 //   // this.src('http://vjs.zencdn.net/v/oceans.mp4')
@@ -16,3 +21,20 @@ import $zq from '@/../zq.js';
 // });
 // alert(element)
 // console.log(element);
+
+var videoCardEvent = document.getElementsByClassName('video-card-event');
+
+console.log(videoCardEvent);
+
+for (let domIndex = 0; domIndex < videoCardEvent.length; domIndex++) {
+  var dom = videoCardEvent[domIndex];
+  addEvent(dom, 'click', function (e) {
+    $zq.dialog({
+      title: 'dadfaf' + domIndex,
+      maskClose: true,
+      onCallBack(type) {
+        console.log(type);
+      }
+    });
+  });
+}

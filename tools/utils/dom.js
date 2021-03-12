@@ -86,31 +86,35 @@ export const addEvent = (ele, ev, fun, modifiers) => {
     let eve = e || window.event;
     switch (modifiers) {
       case "self":
-        if (eve.target == ele) fun(eve);
+        if (eve.target == ele) fun.call(ele, eve);;
         break;
       case "once":
         delEvent(ele, ev, evListen);
-        fun(eve);
+        fun.call(ele, eve);
         break;
       case "prevent":
         eve.preventDefault(); //阻止默认事件
-        fun(eve);
+        fun.call(ele, eve);
         break;
       case "stop":
         console.log(e, '阻止冒泡');
         eve.stopPropagation(); //阻止冒泡
-        fun(eve);
+        fun.call(ele, eve);
         break;
       default:
-        fun(eve)
+        fun.call(ele, eve);
         break;
     }
+    return ele;
   };
+
   addEventListener(ele, ev, evListen);
 }
 
 export const delEvent = (ele, ev, fun) => {
-  removeEventListener(ele, ev, fun)
+  removeEventListener(ele, ev, function (e) {
+    fun.call(ele, e)
+  });
 }
 
 export const getChildNodes = (parent) => {

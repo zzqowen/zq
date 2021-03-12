@@ -59,6 +59,7 @@ export default (params) => {
   appendNode(dialogWrap, dialogBtns);
   if (modal) appendNode(dialogDom, dialogMask);
   appendNode(dialogDom, dialogWrap);
+  // appendNode(document.body, dialogMask);
   appendNode(document.body, dialogDom);
 
   setTimeout(() => {
@@ -70,12 +71,14 @@ export default (params) => {
     setClassList(dialogMask, "ani-opacity-active", 'remove');
     setClassList(dialogWrap, "ani-opacity-active", 'remove');
     setTimeout(() => {
+      // removeNode(dialogMask);
       removeNode(dialogDom);
     }, 300);
   }
 
   if (maskClose) {
     addEvent(dialogMask, "click", (e) => {
+      console.log('kkkk')
       onCallBack('cancel');
       closeDialog();
     }, "self");
