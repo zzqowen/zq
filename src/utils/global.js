@@ -24,14 +24,20 @@ export const toolsList = [{
   key: 'frida'
 }];
 
-export const videosList = [{
-    name: '腾讯视频',
-    logo: require('../images/video/tencent.png'),
-    url: 'https://v.qq.com'
-  },
+export const videosList = [
+  // {
+  //   name: '腾讯视频',
+  //   logo: require('../images/video/tencent.png'),
+  //   url: 'https://v.qq.com'
+  // },
+  // {
+  //   name: '爱奇艺',
+  //   logo: require('../images/video/iqiyi.png'),
+  //   url: 'https://www.iqiyi.com/'
+  // },
   {
-    name: '爱奇艺',
-    logo: require('../images/video/iqiyi.png'),
-    url: 'https://www.iqiyi.com/'
+    name: '百度',
+    logo: '',
+    url: 'https://www.baidu.com/'
   },
 ]
