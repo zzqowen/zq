@@ -29,7 +29,7 @@ export const appendNode = (parentNode, childNode) => {
 
 export const removeNode = (childNode, parent) => {
   if (childNode.parentNode) childNode.parentNode.removeChild(childNode);
-  else parent.removeChild(childNode)
+  else if (parent) parent.removeChild(childNode)
 }
 
 export const setClassList = (node, classStr, type) => {

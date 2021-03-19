@@ -74,7 +74,6 @@ let scroll = (obj) => {
   appendNode(viewDom, wrapDom);
   appendNode(dom, viewDom);
 
-
   let barBox = barUtil.scrollBar(wrapDom, true);
   let barBoxH = barUtil.scrollBar(wrapDom, false);
   appendNode(dom, barBox.bar);

@@ -4,32 +4,35 @@ import {
   removeNode,
   domView,
   setClassList,
-  addEvent
+  getChildNodes,
+  addEvent,
+  delEvent
 } from "tools/utils/dom";
 import {
+  isFirefox,
+  rafThrottle,
   isEmpty
 } from "tools/tool";
 import {
-  initElParams
-} from "tools/common";
-import {
   ZObject
 } from 'tools/compatibility';
-
+import {
+  initElParams
+} from "tools/common";
 import genId from "tools/hash/hashSum";
+import animation from "tools/animation";
 import defaultOptions from "./options";
-import SwiperDom from './swiperDom';
+import DrawerDom from './drawerDom';
 
-let swiper = (el, options) => {
+let drawer = (el, options) => {
   var paramsAll = initElParams(el, options, defaultOptions);
-
-  let allSwiper = [];
+  console.log(paramsAll);
+  let allDrawer = [];
   for (let i = 0, len = paramsAll.el.length; i < len; i++) {
     let elDom = paramsAll.el[i];
-    let curSwiper = new SwiperDom(elDom, paramsAll);
-    allSwiper.push(curSwiper);
+    let curSwiper = new DrawerDom(elDom, paramsAll);
+    allDrawer.push(curSwiper);
   }
-  return allSwiper.length <= 1 ? allSwiper[0] : allSwiper;
+  return allDrawer.length <= 1 ? allDrawer[0] : allDrawer;
 }
-
-export default swiper;
+export default drawer;

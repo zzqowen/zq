@@ -59,8 +59,6 @@ export const ZObject = {
       }
       return target;
     };
-
-
     return _extends.apply({}, arguments);
   }
 }

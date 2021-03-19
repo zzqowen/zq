@@ -5,6 +5,18 @@ import {
   addEvent,
   delEvent
 } from 'tools/utils/dom.js';
+import tools from 'src/utils/tools.js';
+
+var customUserAgent = 'Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A403 Safari/8536.25';
+
+// Object.defineProperty(navigator, 'userAgent', {
+//   value: customUserAgent,
+//   writable: false
+// });
+
+tools.setUserAgent(window, customUserAgent);
+
+console.log(navigator.userAgent)
 
 // $zq.video('video-zq', {controls: true, language: 'zh-cn'}, function(e) {
 //   // this.src('http://vjs.zencdn.net/v/oceans.mp4')
@@ -22,19 +34,35 @@ import {
 // alert(element)
 // console.log(element);
 
+var dd = $zq.drawer({
+  el: '#zq-drawer',
+  onCallBack: function (type) {
+    console.log(type);
+  }
+});
+
+var iframeWebsite = document.getElementById('iframe-website');
+tools.setUserAgent(iframeWebsite.contentWindow, customUserAgent)
+console.log(iframeWebsite.contentWindow.navigator.userAgent);
+
+
 var videoCardEvent = document.getElementsByClassName('video-card-event');
 
-console.log(videoCardEvent);
+// console.log(videoCardEvent);
 
 for (let domIndex = 0; domIndex < videoCardEvent.length; domIndex++) {
   var dom = videoCardEvent[domIndex];
+  console.log(dom);
   addEvent(dom, 'click', function (e) {
-    $zq.dialog({
-      title: 'dadfaf' + domIndex,
-      maskClose: true,
-      onCallBack(type) {
-        console.log(type);
-      }
-    });
+    dd.show();
+    tools.setUserAgent(iframeWebsite.contentWindow, customUserAgent)
+    // var iframeWebsite = document.getElementById('iframe-website');
+    console.log(iframeWebsite.contentWindow.navigator.userAgent);
+    // console.log(e, this, dom.getAttribute('data-url'), iframeWebsite)
+
+    iframeWebsite.setAttribute('src', this.getAttribute('data-url'));
+    // $zq.toast('kkkk')
+
+
   });
 }

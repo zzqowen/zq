@@ -5,8 +5,11 @@ import {
 import {
   getElement
 } from './utils/dom';
+import {
+  ZObject
+} from './compatibility';
 
-export const initElParams = (arg1, arg2) => {
+export const initElParams = (arg1, arg2, defaultOptions) => {
   let el = arg1;
   let params = {};
 
@@ -19,5 +22,5 @@ export const initElParams = (arg1, arg2) => {
   console.log(el, params)
   if (!(!isEmpty(el) || !isEmpty(params.el))) throw new Error("节点不存在");
   params.el = el && !params.el ? getElement(el) : getElement(params.el);
-  return params;
+  return ZObject.assign(defaultOptions || {}, params);
 }

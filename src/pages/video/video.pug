@@ -6,14 +6,16 @@ block content
     .video-block-box.zq-row
       each val, index in videosList
         .video-block.zq-col-xs-8.zq-col-sm-6.zq-col-md-4.zq-col-lg-3.zq-col-xl-2.zq-col-24
-          .card.video-card-event
+          .card.video-card-event('data-url'= val.url)
             img.video-logo-icon(src=val.logo, alt="")
             div.video-logo-name= val.name
 
-    .phone-frame-box
-      block phone
-        include ../../components/phone.pug
-          iframe(src="https://m.baidu.com/", frameborder="0")
+
+    #zq-drawer.zq-drawer-container
+      .phone-frame-box
+        block phone
+          include ../../components/phone.pug
+            iframe#iframe-website(src="", allowpaymentrequest=true, allow="payment", frameborder="0", sandbox="allow-same-origin allow-scripts allow-top-navigation allow-forms")
       
       
         

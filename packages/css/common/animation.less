@@ -17,3 +17,32 @@
 .ani-opacity-active {
   opacity: 1;
 }
+
+.ani-drawer-left {
+  opacity: 0;
+  transform: translate(-100%, 0);
+  transition: 300ms;
+}
+
+.ani-drawer-right {
+  opacity: 0;
+  transform: translate(100%, 0);
+  transition: 300ms;
+}
+
+.ani-drawer-top {
+  opacity: 0;
+  transform: translate(0, -100%);
+  transition: 300ms;
+}
+
+.ani-drawer-bottom {
+  opacity: 0;
+  transform: translate(0, 100%);
+  transition: 300ms;
+}
+
+.ani-drawer-left-active, .ani-drawer-right-active, .ani-drawer-top-active, .ani-drawer-bottom-active {
+  opacity: 1;
+  transform: translate(0, 0);
+}

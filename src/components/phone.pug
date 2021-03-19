@@ -13,6 +13,15 @@ style(type="text/css").
     position: relative;
     display: inline-block;
   }
+  .simulator-container-bg {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+    border-radius: 36px;
+    background-color: white;
+  }
   .phone-simulator-img {
     width: #{phoneWidth + 'px'};
     position: relative;
@@ -121,6 +130,7 @@ style(type="text/css").
       each val, index in operatButtonList
         .every-operating-button= val.name
   .simulator-container
+    .simulator-container-bg
     img.phone-simulator-img(src=require("src/components/images/phone-model/iphone_12.png"), alt="")
     .iphone-status-bar
       .status-bar-all.status-bar-time(id="iphone-status-bar_time")= "00:00"
