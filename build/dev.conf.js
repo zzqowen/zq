@@ -39,7 +39,7 @@ const webpackConfig = merge(baseConfig, {
       }, ],
     },
     hot: false,
-    contentBase: path.join(__dirname, '../dist'), // since we use CopyWebpackPlugin.
+    contentBase: false, // since we use CopyWebpackPlugin.
     compress: true,
     host: HOST || config.dev.host,
     port: PORT || config.dev.port,

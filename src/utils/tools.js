@@ -17,5 +17,21 @@ export default {
         });
       }
     }
+  },
+  isEmpty: function (val) {
+    if (val == null) return true;
+    if (typeof val === 'boolean') return val;
+    if (typeof val === 'number') return false;
+    switch (Object.prototype.toString.call(val)) {
+      // String or Array
+      case '[object String]':
+      case '[object Array]':
+        return !val.length;
+        // Plain Object
+      case '[object Object]': {
+        return !Object.keys(val).length;
+      }
+    }
+    return false;
   }
 }

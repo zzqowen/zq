@@ -17,6 +17,8 @@ const getHost = function () {
 
 const distRoot = "dist";
 
+console.log(`http://${getHost()}:7777`)
+
 module.exports = {
   base: {
     packagesRoot: 'packages',
@@ -26,14 +28,13 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: `http://${getHost()}:8888`,
+        target: `http://${getHost()}:7777`,
         changeOrigin: true,
         pathRewrite: {
           '/api': ''
         }
       }
     },
-
     host: getHost(), // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
