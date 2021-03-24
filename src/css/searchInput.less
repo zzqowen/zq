@@ -25,6 +25,7 @@
   .zq-search-input-box {
     overflow: hidden;
     height: 100%;
+
     input.zq-search-input {
       padding: 0;
       width: 100%;
@@ -36,18 +37,19 @@
       box-sizing: border-box;
       font-size: 18px;
       color: #4c4948;
-      font-weight: 560;
+      font-weight: 520;
 
-      &::-webkit-input-placeholder {
-        font-size: 16px;
-        font-weight: normal;
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus {
+        border: 0 none;
+        -webkit-text-fill-color: @theme-color;
+        -webkit-box-shadow: 0 0 0px 1000px @search-input-bg inset;
+        transition: background-color 1s ease-in-out 0s;
       }
 
-      &::-ms-input-placeholder {
-        font-size: 16px;
-        font-weight: normal;
-      }
-
+      &::-webkit-input-placeholder,
+      &::-ms-input-placeholder,
       &::-moz-placeholder {
         font-size: 16px;
         font-weight: normal;
@@ -61,6 +63,7 @@
     float: right;
     text-align: center;
     cursor: pointer;
+
     img.zq-search-btn-icon {
       width: 20px;
       margin-top: 10px;

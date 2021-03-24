@@ -1,3 +1,5 @@
+var prefix = process.env.NODE_ENV == 'development' ? '/api' : ''
+
 export default function (params) {
   var defaultP = {
     url: '',
@@ -69,7 +71,7 @@ export default function (params) {
     p.url = getUrlParam(p.url, p.data);
   }
 
-  xhr.open(p.method, p.url, p.async);
+  xhr.open(p.method, prefix + p.url, p.async);
 
   xhr.responseType = p.dataType;
 

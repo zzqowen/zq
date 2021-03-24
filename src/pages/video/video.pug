@@ -2,14 +2,14 @@ extends ../../layout/layout.pug
 
 block content
   .zq-normal-banner
-    .zq-search-box
+    div#zq-search-form.zq-search-box
       .zq-search-type-box
       .zq-search-btn#search-btn 
         img.zq-search-btn-icon(src=require('src/images/search.png'), alt="")
       .zq-search-input-box
-        input#search-input.zq-search-input(type="text", placeholder="请输入检索条件")
+        input#search-input.zq-search-input(type="text", placeholder="请输入检索条件", name="keyword", autocomplete="on")
   .zq-video-content#zq-video-content
-    .video-block-box.zq-row
+    .video-block-box
       //- each val, index in videosList
       //-   .video-block.zq-col-xs-8.zq-col-sm-6.zq-col-md-4.zq-col-lg-3.zq-col-xl-2.zq-col-24
       //-     .card.video-card-event('data-url'= val.url)

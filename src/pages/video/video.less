@@ -1,9 +1,18 @@
 @import '../../css/header.less';
-@import './searchInput.less';
+@import '../../css/searchInput.less';
 
 .zq-normal-banner {
-  padding-top: 20px;
-  height: 60px;
+  padding: 80px 0 30px;
+  height: auto;
+}
+
+@keyframes rotateInfinite {
+  to {
+    transform: rotate(0deg);
+  }
+  from {
+    transform: rotate(360deg);
+  }
 }
 
 .zq-video-content {
@@ -15,6 +24,94 @@
   border-top: 1px solid @color-e;
   border-right: 2px solid @color-e;
   border-bottom: 2px solid @color-e;
+
+  .zq-search-default {
+    text-align: center;
+    font-size: 18px;
+    padding: 20px;
+  }
+
+  .zq-empty-history{
+    text-align: center;
+    font-size: 18px;
+    padding: 20px;
+  }
+
+  .zq-search-loading {
+    text-align: center;
+    padding: 12px;
+    img.zq-loading-icon {
+      width: 32px;
+      animation: rotateInfinite 1s linear infinite;
+      animation-delay: 0ms;
+    }
+  }
+
+  .zq-v-box {
+    width: 600px;
+    line-height: 1.3;
+    padding: 20px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    .zq-v-url {
+      position: relative;
+      display: block;
+      color: @theme-text;
+      .zq-v-logo {
+        width: 160px;
+        height: 224px;
+      }
+      .zq-v-content {
+        position: absolute;
+        left: 180px;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        .zq-v-title {
+          font-size: 20px;
+          line-height: 30px;
+          padding-bottom: 6px;
+          color: @theme-danger-color;
+          & span {
+            color: @theme-gray-text;
+            font-size: 14px;
+            vertical-align: top;
+          }
+          .zq-v-sub-title {
+            
+          }
+          .zq-v-type {
+            font-size: 12px;
+          }
+        }
+
+        .zq-v-character {
+          font-size: 14px;
+          padding: 5px 0;
+          color: @theme-sub-text;
+          .zq-v-label {
+            color: @theme-gray-text;
+            margin-right: 12px;
+            vertical-align: top;
+          }
+          .zq-v-value {
+            display: inline-block;
+            width: 360px;
+          }
+
+          &.zq-v-desc {
+            margin-top: 6px;
+            .zq-v-desc-value {
+              max-height: 92px;
+              overflow: hidden;
+            }
+          }
+        }
+        
+      }
+    }
+  }
+
 
   .video-block-box {
 
