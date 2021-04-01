@@ -83,7 +83,7 @@ export default function (params) {
     if (xhr.readyState === 4 && xhr.status === 200) {
       var rType = p.dataType;
       var d = xhr.responseText;
-      console.log(xhr, rType);
+      // console.log(xhr, rType);
       if (rType == 'document') {
         p.success(xhr.responseXML)
       } else {
@@ -99,16 +99,35 @@ export default function (params) {
     }
   }
 
-  xhr.onloadend = function () {
-    p.complete(xhr, xhr.status);
+  var ableFailBack = true;
+
+  var handleFail = function (re) {
+    if (!(xhr.readyState === 4 && xhr.status === 200)) {
+      if (ableFailBack) {
+        ableFailBack = false;
+        p.fail(xhr, xhr.status, re);
+        setTimeout(function () {
+          ableFailBack = true;
+        });
+      }
+    }
   }
 
+  xhr.onloadend = function (res) {
+    p.complete(xhr, xhr.status);
+    handleFail(res)
+  }
+
+  xhr.onabort = function (error) {
+    handleFail(error);
+  };
+
   xhr.onerror = function (error) {
-    p.fail(xhr, xhr.status, error);
+    handleFail(error);
   }
 
   xhr.ontimeout = function (e) {
-    p.fail(xhr, 408, e);
+    handleFail(e);
   }
 
   if (p.async && p.timeout) {
@@ -116,6 +135,6 @@ export default function (params) {
   }
 
   xhr.send(pMethod === 'GET' || pMethod === 'DELETE' ? null : getQueryData(p.data));
-  
+
   return xhr;
 }

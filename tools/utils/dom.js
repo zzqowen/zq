@@ -14,9 +14,10 @@ export const getElement = (el, context) => {
     dom = el;
   } else if (typeof el == 'string') {
     dom = isUndefined(context) || !context.querySelectorAll ? document.querySelectorAll(el) : context.querySelectorAll(el);
+    if (/#\S+\s*$/g.test(el)) dom = dom[0];
   }
   if (!dom || dom.length == 0) throw new Error("节点不存在");
-  return dom
+  return dom;
 }
 
 export const createElement = (tag) => {

@@ -65,8 +65,7 @@ const webpackConfig = merge(baseConfig, {
       cssProcessorOptions: {
         safe: true
       }
-    }),
-    ...utils.globFile().html,
+    })
   ]
 })
 

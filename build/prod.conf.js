@@ -26,8 +26,8 @@ const webpackConfig = merge(baseConfig, {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'css/[name].css',
-      chunkFilename: '[id].css',
+      filename: 'css/[name]-[contenthash:6].css',
+      chunkFilename: '[id]-[contenthash:6].css',
     }),
     new OptimizeCSSPlugin({
       cssProcessorOptions: config.build.productionSourceMap ? {
@@ -38,8 +38,7 @@ const webpackConfig = merge(baseConfig, {
       } : {
         safe: true
       }
-    }),
-    ...utils.globFile().html,
+    })
   ],
   optimization: {
     minimizer: [

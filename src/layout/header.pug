@@ -10,7 +10,7 @@ div.zq-header
     div.zq-nav.inline-block-middle
       each val, index in navList
         .zq-nav-item
-          a.zq-nav-a(class=`${val.key == key ? 'zq-nav-a-cur' : ''}` href=`./${val.key == 'home' ? 'index' : val.key}.html` title=`${lang.nav[val.key]}`)
+          a.zq-nav-a(class=`${val.key == key ? 'zq-nav-a-cur' : ''}` href=`/${val.key == 'home' ? 'index' : val.key}.html` title=`${lang.nav[val.key]}`)
             //- i.fa.zq-nav-a-icon(class= `fa-${val.icon}`)
             div.zq-nav-a-img(style=`background-image: url(${require("src/images/nav/img.png")}); background-position: ${val.position[0] + 'px ' + val.position[1]}`)
             | #{lang.nav[val.key].label}

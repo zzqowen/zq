@@ -1,4 +1,5 @@
 @import '../../css/header.less';
+@import '../../css/common/mixins.less';
 @import '../../css/searchInput.less';
 
 .zq-normal-banner {
@@ -6,20 +7,25 @@
   height: auto;
 }
 
+.zq-search-box {
+  max-width: 88%;
+}
+
 @keyframes rotateInfinite {
   to {
     transform: rotate(0deg);
   }
+
   from {
     transform: rotate(360deg);
   }
 }
 
 .zq-video-content {
-  margin: 20px;
+  margin: 5px;
   background: @white;
   border-radius: @card-border-radius;
-  padding: 10px;
+  padding: 10px 2px;
   border-left: 1px solid @color-e;
   border-top: 1px solid @color-e;
   border-right: 2px solid @color-e;
@@ -31,7 +37,7 @@
     padding: 20px;
   }
 
-  .zq-empty-history{
+  .zq-empty-history {
     text-align: center;
     font-size: 18px;
     padding: 20px;
@@ -40,6 +46,7 @@
   .zq-search-loading {
     text-align: center;
     padding: 12px;
+
     img.zq-loading-icon {
       width: 32px;
       animation: rotateInfinite 1s linear infinite;
@@ -48,69 +55,197 @@
   }
 
   .zq-v-box {
-    width: 600px;
+    max-width: 90%;
+    min-width: 280px;
     line-height: 1.3;
-    padding: 20px;
+    padding: 10px;
     margin: 0 auto;
     margin-bottom: 20px;
+
     .zq-v-url {
       position: relative;
       display: block;
       color: @theme-text;
+
       .zq-v-logo {
-        width: 160px;
-        height: 224px;
+        width: 33.3%;
+        border-radius: 3px;
       }
+
       .zq-v-content {
         position: absolute;
-        left: 180px;
+        left: 33.3%;
+        padding-left: 8px;
         right: 0;
         top: 0;
         bottom: 0;
+
         .zq-v-title {
-          font-size: 20px;
-          line-height: 30px;
+          font-size: 14px;
+          line-height: 20px;
           padding-bottom: 6px;
           color: @theme-danger-color;
+
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+
           & span {
             color: @theme-gray-text;
-            font-size: 14px;
+            font-size: 12px;
             vertical-align: top;
           }
-          .zq-v-sub-title {
-            
-          }
+
+          .zq-v-sub-title {}
+
           .zq-v-type {
             font-size: 12px;
           }
         }
 
         .zq-v-character {
-          font-size: 14px;
-          padding: 5px 0;
+          font-size: 12px;
+          padding: 2px 0;
           color: @theme-sub-text;
+
+          &:after {
+            content: '';
+            display: block;
+            clear: both;
+          }
+
           .zq-v-label {
             color: @theme-gray-text;
             margin-right: 12px;
             vertical-align: top;
+            float: left;
           }
+
           .zq-v-value {
-            display: inline-block;
-            width: 360px;
+            // display: inline-block;
+            overflow: hidden;
+            display: block;
           }
 
           &.zq-v-desc {
             margin-top: 6px;
+
             .zq-v-desc-value {
-              max-height: 92px;
+              max-height: 45px;
               overflow: hidden;
             }
           }
         }
-        
+
       }
     }
   }
+
+  .xsZpVBox() {
+    .zq-v-content {
+      padding: 10px;
+    }
+
+    .zq-v-box {
+      padding: 20px;
+
+      .zq-v-url {
+        .zq-v-logo {}
+
+        .zq-v-content {
+
+          .zq-v-title {
+            font-size: 20px;
+            line-height: 30px;
+            padding-bottom: 6px;
+
+            & span {
+              font-size: 14px;
+            }
+
+            .zq-v-sub-title {}
+
+            .zq-v-type {
+              font-size: 12px;
+            }
+          }
+
+
+          .zq-v-character {
+            font-size: 14px;
+            padding: 4px 0;
+
+            .zq-v-value {
+              // width: 180px;
+            }
+
+            &.zq-v-desc {
+              margin-top: 6px;
+
+              .zq-v-desc-value {
+                max-height: 91px;
+                overflow: hidden;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .smZpVBox() {
+    .zq-v-box {
+      padding: 20px;
+      max-width: 600px;
+
+      .zq-v-url {
+        .zq-v-logo {
+          width: 160px;
+        }
+
+        .zq-v-content {
+          left: 180px;
+
+          .zq-v-character {
+            font-size: 14px;
+
+            .zq-v-value {
+              // width: 360px;
+            }
+
+            &.zq-v-desc {
+              margin-top: 6px;
+
+              .zq-v-desc-value {
+                max-height: 110px;
+                overflow: hidden;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .mdZpVBox() {
+    .zq-v-box {
+      max-width: 720px;
+
+      .zq-v-url {
+        .zq-v-content {
+          .zq-v-character {
+            .zq-v-value {
+              // width: 480px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .mediaCol('xs', .xsZpVBox());
+  .mediaCol('sm', .smZpVBox());
+  .mediaCol('md', .mdZpVBox());
 
 
   .video-block-box {
@@ -118,6 +253,7 @@
     .video-block {
       text-align: center;
       padding: 5px 6px;
+
       .video-logo-icon {
         width: 46px;
 

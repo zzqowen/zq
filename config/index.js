@@ -17,8 +17,6 @@ const getHost = function () {
 
 const distRoot = "dist";
 
-console.log(`http://${getHost()}:7777`)
-
 module.exports = {
   base: {
     packagesRoot: 'packages',
@@ -28,8 +26,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        // target: `http://${getHost()}:7777`,
-        target: `http://120.24.76.1:7777`,
+        target: `http://${getHost()}:7777`,
+        // target: `http://120.24.76.1:7777`,
         changeOrigin: true,
         pathRewrite: {
           '/api': ''
@@ -49,8 +47,8 @@ module.exports = {
   build: {
     index: path.resolve(__dirname, `../${distRoot}/index.html`),
     assetsRoot: path.resolve(__dirname, `../${distRoot}`),
-    assetsSubDirectory: './static',
-    assetsPublicPath: './',
+    assetsSubDirectory: './',
+    assetsPublicPath: '../',
 
     productionSourceMap: false
   }

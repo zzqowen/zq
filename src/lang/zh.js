@@ -20,6 +20,9 @@ export default {
     video: {
       label: '影视',
       title: '搜搜看'
+    },
+    videoDetail: {
+      title: '视频详情'
     }
   },
   tools: {

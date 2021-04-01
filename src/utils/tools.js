@@ -33,5 +33,15 @@ export default {
       }
     }
     return false;
+  },
+  transmitParams: function (key, value) {
+    localStorage.setItem(key, value);
+  },
+  getTransmitParams: function (key) {
+    var p = '';
+    try {
+      p = localStorage.getItem(key);
+    } catch (error) {}
+    return p;
   }
 }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <a href="https://www.baidu.com" id="txt">agagasg</a>
+  <script>
+    var c = document.getElementById('txt');
+    c.addEventListener('click', function(e) {
+      e.preventDefault()
+      return false;
+    })
+    // c.onclick = function(e) {
+    //   console.log(e)
+    //   e.preventDefault();
+    //   // return false;
+    // }
+  </script>
+</body>
+</html>

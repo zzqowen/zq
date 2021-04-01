@@ -8,6 +8,7 @@ const Handlebars = require('handlebars');
 const posthtml = require('posthtml');
 const include = require('posthtml-include');
 const glob = require('glob');
+const WebpackHtmlPluginSupplement = require('webpack-html-plugin-supplement') //修改webpack-html-plugin public-path
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
@@ -23,8 +24,8 @@ module.exports = {
   },
   output: {
     path: config.build.assetsRoot,
-    filename: "[name].js",
-    publicPath: config.build.assetsPublicPath,
+    filename: process.env.NODE_ENV === 'production' ? "js/[name]-[contenthash:6].js" : "js/[name].js",
+    publicPath: '../'
     // libraryExport: 'zq',
     // library: "$zq", //插件的名字
     // libraryTarget: "umd"
@@ -46,30 +47,6 @@ module.exports = {
         }
 
       }, {
-        test: /\.html$/i,
-        loaders: [{
-          loader: 'html-loader',
-          options: {
-            esModule: true,
-            preprocessor: (content, loaderContext) => {
-              let result;
-              try {
-                result = posthtml().use(include({
-                  encoding: 'utf8'
-                })).process(content, {
-                  sync: true
-                });
-              } catch (error) {
-                loaderContext.emitError(error);
-
-                return content;
-              }
-              // console.log(result.html);
-              return result.html;
-            },
-          },
-        }]
-      }, {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /(node_modules|^(node_modules\/webpack-dev-server\/client))/,
@@ -79,7 +56,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 1000,
-          name: utils.assetsPath('img/[name].[hash:7].[ext]'),
+          name: utils.assetsPath('/img/[name].[hash:7].[ext]'),
           esModule: false,
         }
       },
@@ -95,5 +72,14 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    ...utils.globFile().html,
+    new WebpackHtmlPluginSupplement({
+      publicPath: (src, name) => {
+        // console.log(src, name)
+        return ['index', 'categories', 'video', 'tools', 'my'].indexOf(name) != -1 ? './' + src : '../' + src;
+      }
+    })
+  ]
 }

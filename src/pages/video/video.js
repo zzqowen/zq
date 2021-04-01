@@ -1,6 +1,7 @@
 import './video.less';
 import $zq from '@/../zq.js';
 import {
+  getElement,
   domView,
   addEvent,
   delEvent
@@ -8,26 +9,10 @@ import {
 import tools from 'src/utils/tools.js';
 import http from 'src/utils/http.js';
 
-console.log(http)
-
-var customUserAgent = 'Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A403 Safari/8536.25';
-
-// Object.defineProperty(navigator, 'userAgent', {
-//   value: customUserAgent,
-//   writable: false
-// });
-
-tools.setUserAgent(window, customUserAgent);
-
-console.log(navigator.userAgent);
-
-var searchStatus = 1;
-
-
-var searchBtn = document.getElementById('search-btn');
-var searchInput = document.getElementById('search-input');
-var videoContent = document.getElementById('zq-video-content');
-var searchForm = document.getElementById('zq-search-form');
+var searchBtn = getElement('#search-btn');
+var searchInput = getElement('#search-input');
+var videoContent = getElement('#zq-video-content');
+var searchForm = getElement('#zq-search-form');
 
 console.log(searchForm)
 
@@ -41,36 +26,17 @@ console.log(searchForm)
 //   "type": "电视剧",
 //   "url": "https://v.qq.com/search_redirect.html?cid=sdp00100510nky2&url=https%3A%2F%2Fwww.iqiyi.com%2Fv_260uudpmizo.html%3Fvfm%3Dm_103_txsp"
 // }];
-// var html = ''
-// for (var i = 0, len = dData.length; i < len; i++) {
-//   var item = dData[i];
-//   html += `<div class="zq-v-box"><a class="zq-v-url" href="${item.url}"><img class="zq-v-logo" src="${"item.logo"}" alt=""/><div class="zq-v-content"><div class="zq-v-title">${item.title}<span class="zq-v-sub-title">${item.sub}</span><span class="zq-v-type">${item.type}</span></div>
-//   <div class="zq-v-character">
-//     <span class="zq-v-label">导演</span>
-//     <span class="zq-v-value">${item.director.join("")}</span>
-//   </div>
-//   <div class="zq-v-character">
-//     <span class="zq-v-label">演员</span>
-//     <span class="zq-v-value">${item.performer.join(" ")}</span>
-//   </div>
-//   <div class="zq-v-character zq-v-desc">
-//     <span class="zq-v-label">简介</span>
-//     <span class="zq-v-value">${item.desc}</span>
-//   </div>
-//   </div></a></div>`
-// }
-// videoContent.innerHTML = html;
 
 var statusList = [
   `<div class="zq-search-default">更多精彩等你发现</div>`,
   `<div class="zq-search-loading"><img class="zq-loading-icon" src="${require('src/images/loading.png')}" alt=""/></div>`,
   `<div class="zq-empty-history">记录走丢了</div>`,
+  `<div class="zq-empty-history">网页走丢了</div>`,
 ]
 
-function setSearchStatus() {
-  var id = searchStatus;
-  console.log(id)
-  videoContent.innerHTML = statusList[id - 1]
+function setSearchStatus(status) {
+  var sta = status || 1;
+  videoContent.innerHTML = statusList[sta - 1]
 }
 
 var jixieUrl = 'https://www.playm3u8.cn/jiexi.php?url='
@@ -86,7 +52,7 @@ function handleUrl(url) {
 
 addEvent(searchForm, 'keydown', function (e) {
   if (e.keyCode == 13) {
-    console.log(e.keyCode)
+    // console.log(e.keyCode)
     searchData()
   }
 })
@@ -95,14 +61,57 @@ addEvent(searchBtn, 'click', function (e) {
   searchData()
 });
 
+
+var handlePage = function (data) {
+  var html = ''
+  for (var i = 0, len = data.length; i < len; i++) {
+    var item = data[i];
+    html += `<div class="zq-v-box card"><a class="zq-v-url" href="${item.url}"><img class="zq-v-logo" src="${'item.logo' || require('src/images/video-img-bg.jpg')}" alt=""/><div class="zq-v-content"><div class="zq-v-title">${item.title}<span class="zq-v-sub-title">${item.sub}</span><span class="zq-v-type">${item.type}</span></div>
+                <div class="zq-v-character">
+                  <span class="zq-v-label">导演</span>
+                  <span class="zq-v-value nowrap-ellipsis">${item.director.join("")}</span>
+                </div>
+                <div class="zq-v-character">
+                  <span class="zq-v-label">演员</span>
+                  <span class="zq-v-value nowrap-ellipsis" title="${item.performer.join(" ")}">${item.performer.join(" ")}</span>
+                </div>
+                <div class="zq-v-character zq-v-desc">
+                  <span class="zq-v-label">简介</span>
+                  <span class="zq-v-value zq-v-desc-value">${item.desc}</span>
+                </div>
+                </div></a></div>`
+  }
+  // console.log(html)
+  videoContent.innerHTML = html;
+
+  var urlAList = getElement('.zq-v-url');
+  console.log(urlAList);
+  for (var j = 0; j < urlAList.length; j++) {
+    var aDom = urlAList[j];
+    addEvent(aDom, 'click', function(e) {
+      
+      console.log(this);
+      tools.transmitParams('v-src', this.href);
+      location.href = "/html/videoDetail.html";
+    }, 'prevent')
+  }
+
+
+
+  if (html == '') {
+    setSearchStatus(3)
+  }
+}
+
+// handlePage(dData)
+
 var searchData = function () {
   var val = searchInput.value;
   if (tools.isEmpty(val)) {
     return $zq.toast('请输入检索条件');
   }
 
-  searchStatus = 2;
-  setSearchStatus()
+  setSearchStatus(2)
   http({
     method: 'GET',
     url: '/search',
@@ -110,34 +119,15 @@ var searchData = function () {
       keyword: val
     },
     success: function (res) {
-      console.log(JSON.stringify(res.data));
+      console.log(res.data);
       if (res.code != 0) {
         $zq.toast(res.message);
       } else {
-        var html = ''
-        for (var i = 0, len = res.data.length; i < len; i++) {
-          var item = res.data[i];
-          html += `<div class="zq-v-box card"><a class="zq-v-url" href="${jixieUrl + handleUrl(item.url)}"><img class="zq-v-logo" src="${item.logo}" alt=""/><div class="zq-v-content"><div class="zq-v-title">${item.title}<span class="zq-v-sub-title">${item.sub}</span><span class="zq-v-type">${item.type}</span></div>
-                <div class="zq-v-character">
-                  <span class="zq-v-label">导演</span>
-                  <span class="zq-v-value">${item.director.join("")}</span>
-                </div>
-                <div class="zq-v-character">
-                  <span class="zq-v-label">演员</span>
-                  <span class="zq-v-value">${item.performer.join(" ")}</span>
-                </div>
-                <div class="zq-v-character zq-v-desc">
-                  <span class="zq-v-label">简介</span>
-                  <span class="zq-v-value zq-v-desc-value">${item.desc}</span>
-                </div>
-                </div></a></div>`
-        }
-        if (html == '') {
-          searchStatus = 3
-          setSearchStatus()
-        }
-        videoContent.innerHTML = html;
+        handlePage(res.data);
       }
+    },
+    fail: function (error) {
+      setSearchStatus(4);
     }
   })
 }
