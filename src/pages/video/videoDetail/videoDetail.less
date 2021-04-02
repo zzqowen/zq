@@ -1,7 +1,62 @@
 @import '../../../css/header.less';
+@import '../../../css/common/mixins.less';
 
-.zq-video-frame {
-  width: 100%;
-  height: 340px;
-  background-color: #000;
+.self-adaption-page(230px, 0, 'vertical');
+
+.mediaCol('xs', .self-adaption-page(230px, 0, 'vertical'));
+.mediaCol('sm', .self-adaption-page(300px, 0, 'vertical'));
+.mediaCol('md', .self-adaption-page(400px, 0, 'vertical'));
+
+.zq-video-detail-box {
+
+
+  .zq-video-iframe-box {
+
+    .zq-video-iframe {
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+    }
+  }
+
+  .video-episode-box {
+    font-size: 0;
+    text-align: center;
+    background-color: white;
+
+    .video-episode-inline-block {
+      background-color: transparent;
+      display: inline-block;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+
+      .video-episode-list {
+        padding-top: 20px;
+        font-size: 0;
+        text-align: center;
+
+        .video-episode-item {
+          text-align: center;
+          font-size: 14px;
+          width: 50px;
+          line-height: 50px;
+          border-radius: 3px;
+          background-color: #f8f8f8;
+          border: 1px solid #ccc;
+          display: inline-block;
+          margin: 5px 3px;
+          color: black;
+
+          &.video-episode-item-checked {
+            background-color: @theme-color;
+            color: white;
+          }
+          .video-episode-txt {}
+        }
+      }
+    }
+
+  }
 }

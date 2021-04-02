@@ -39,8 +39,6 @@ function setSearchStatus(status) {
   videoContent.innerHTML = statusList[sta - 1]
 }
 
-var jixieUrl = 'https://www.playm3u8.cn/jiexi.php?url='
-
 setSearchStatus();
 
 function handleUrl(url) {
@@ -66,7 +64,7 @@ var handlePage = function (data) {
   var html = ''
   for (var i = 0, len = data.length; i < len; i++) {
     var item = data[i];
-    html += `<div class="zq-v-box card"><a class="zq-v-url" href="${item.url}"><img class="zq-v-logo" src="${'item.logo' || require('src/images/video-img-bg.jpg')}" alt=""/><div class="zq-v-content"><div class="zq-v-title">${item.title}<span class="zq-v-sub-title">${item.sub}</span><span class="zq-v-type">${item.type}</span></div>
+    html += `<div class="zq-v-box card"><a class="zq-v-url" href="${item.url}"><img class="zq-v-logo" src="${item.logo || require('src/images/video-img-bg.jpg')}" alt=""/><div class="zq-v-content"><div class="zq-v-title">${item.title}<span class="zq-v-sub-title">${item.sub}</span><span class="zq-v-type">${item.type}</span></div>
                 <div class="zq-v-character">
                   <span class="zq-v-label">导演</span>
                   <span class="zq-v-value nowrap-ellipsis">${item.director.join("")}</span>
@@ -85,12 +83,12 @@ var handlePage = function (data) {
   videoContent.innerHTML = html;
 
   var urlAList = getElement('.zq-v-url');
-  console.log(urlAList);
+  // console.log(urlAList);
   for (var j = 0; j < urlAList.length; j++) {
     var aDom = urlAList[j];
     addEvent(aDom, 'click', function(e) {
       
-      console.log(this);
+      // console.log(this);
       tools.transmitParams('v-src', this.href);
       location.href = "/html/videoDetail.html";
     }, 'prevent')
@@ -119,7 +117,7 @@ var searchData = function () {
       keyword: val
     },
     success: function (res) {
-      console.log(res.data);
+      // console.log(res.data);
       if (res.code != 0) {
         $zq.toast(res.message);
       } else {
@@ -131,6 +129,8 @@ var searchData = function () {
     }
   })
 }
+
+
 
 
 // $zq.video('video-zq', {controls: true, language: 'zh-cn'}, function(e) {

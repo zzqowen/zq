@@ -67,3 +67,54 @@
 
   }
 }
+
+//水平垂直自适应布局
+.self-adaption-page(@sideWidth: 200px, @otherSideWidth: 0px, @type: 'horizontal') {
+  & when (@type = 'horizontal') {
+    .zq-self-adaption {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      .zq-self-adaption-side {
+        width: @sideWidth;
+        height: 100%;
+      }
+
+      .zq-self-adaption-content {
+        position: absolute;
+        top: 0;
+        left: @sideWidth;
+        right: @otherSideWidth;
+        bottom: 0;
+      }
+
+      .zq-self-adaption-other-side {
+        width: @otherSideWidth;
+        height: 100%;
+      }
+    }
+  }
+
+  & when (@type = 'vertical') {
+    .zq-self-adaption {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      .zq-self-adaption-side {
+        height: @sideWidth;
+      }
+
+      .zq-self-adaption-content {
+        position: absolute;
+        top: @sideWidth;
+        left: 0;
+        right: 0;
+        bottom: @otherSideWidth;
+      }
+
+      .zq-self-adaption-other-side {
+        height: @otherSideWidth;
+      }
+    }
+  }
+}

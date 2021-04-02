@@ -25,7 +25,7 @@ module.exports = {
   output: {
     path: config.build.assetsRoot,
     filename: process.env.NODE_ENV === 'production' ? "js/[name]-[contenthash:6].js" : "js/[name].js",
-    publicPath: '../'
+    publicPath: '/'
     // libraryExport: 'zq',
     // library: "$zq", //插件的名字
     // libraryTarget: "umd"
@@ -78,7 +78,8 @@ module.exports = {
     new WebpackHtmlPluginSupplement({
       publicPath: (src, name) => {
         // console.log(src, name)
-        return ['index', 'categories', 'video', 'tools', 'my'].indexOf(name) != -1 ? './' + src : '../' + src;
+        src = src.indexOf('/') == 0 ? src : '/' + src;
+        return ['index', 'categories', 'video', 'tools', 'my'].indexOf(name) != -1 ? '.' + src : '..' + src;
       }
     })
   ]

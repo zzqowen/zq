@@ -7,8 +7,6 @@ import swiper from "@/swiper";
 // import video from "@/video";
 import drawer from "@/drawer";
 
-console.log('234234234');
-
 export default {
   scroll,
   dialog,

@@ -1,6 +1,12 @@
 extends ../../../layout/layout.pug
 
 block content
-    .zq-normal-banner
-      iframe.zq-video-frame(src="", frameborder="0")
-      .txt= 999999
+    .zq-video-detail-box.zq-self-adaption
+      .zq-video-iframe-box.zq-self-adaption-side
+        iframe#zq-video-iframe.zq-video-iframe(src="", frameborder="0")
+      .video-episode-box.zq-self-adaption-content
+        .video-episode-inline-block
+          .video-episode-list#video-episode-list
+            //- each val, index in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+            //-   .video-episode-item.btn-hover
+            //-     .video-episode-txt= 'val'

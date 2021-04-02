@@ -37,10 +37,11 @@ export default {
   transmitParams: function (key, value) {
     localStorage.setItem(key, value);
   },
-  getTransmitParams: function (key) {
+  getTransmitParams: function (key, del) {
     var p = '';
     try {
       p = localStorage.getItem(key);
+      if (!!del) localStorage.removeItem(key);
     } catch (error) {}
     return p;
   }
