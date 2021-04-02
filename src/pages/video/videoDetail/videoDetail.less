@@ -1,21 +1,34 @@
 @import '../../../css/header.less';
 @import '../../../css/common/mixins.less';
 
-.self-adaption-page(230px, 0, 'vertical');
+.self-adaption-page(300px, 0, 'vertical');
 
-.mediaCol('xs', .self-adaption-page(230px, 0, 'vertical'));
-.mediaCol('sm', .self-adaption-page(300px, 0, 'vertical'));
-.mediaCol('md', .self-adaption-page(400px, 0, 'vertical'));
+.mediaCol('xs', .self-adaption-page(300px, 0, 'vertical'));
+.mediaCol('sm', .self-adaption-page(380px, 0, 'vertical'));
+.mediaCol('md', .self-adaption-page(460px, 0, 'vertical'));
 
 .zq-video-detail-box {
-
-
   .zq-video-iframe-box {
+    position: relative;
+    background-color: #000;
 
-    .zq-video-iframe {
+    .zq-iframe-nav-box {
+      height: 56px;
+    }
+
+    .zq-iframe-content-box {
+      position: absolute;
+      top: 56px;
+      bottom: 0;
       width: 100%;
-      height: 100%;
-      background-color: #000;
+      left: 0;
+      right: 0;
+
+      .zq-video-iframe {
+        width: 100%;
+        height: 100%;
+
+      }
     }
   }
 
@@ -53,6 +66,7 @@
             background-color: @theme-color;
             color: white;
           }
+
           .video-episode-txt {}
         }
       }

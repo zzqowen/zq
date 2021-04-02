@@ -3,7 +3,9 @@ extends ../../../layout/layout.pug
 block content
     .zq-video-detail-box.zq-self-adaption
       .zq-video-iframe-box.zq-self-adaption-side
-        iframe#zq-video-iframe.zq-video-iframe(src="", frameborder="0")
+        .zq-iframe-nav-box
+        .zq-iframe-content-box
+          iframe#zq-video-iframe.zq-video-iframe(src="", frameborder="0")
       .video-episode-box.zq-self-adaption-content
         .video-episode-inline-block
           .video-episode-list#video-episode-list
