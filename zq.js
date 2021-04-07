@@ -6,6 +6,7 @@ import menu from "@/menu";
 import swiper from "@/swiper";
 // import video from "@/video";
 import drawer from "@/drawer";
+import workflow from "@/workflow";
 
 export default {
   scroll,
@@ -13,5 +14,6 @@ export default {
   toast,
   menu,
   swiper,
-  drawer
+  drawer,
+  workflow
 }

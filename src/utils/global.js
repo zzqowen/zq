@@ -18,6 +18,10 @@ export const navList = [{
   key: 'my',
   icon: 'user',
   position: [0, 0]
+}, {
+  key: 'ui',
+  icon: 'user',
+  position: [0, 0]
 }];
 
 export const toolsList = [{

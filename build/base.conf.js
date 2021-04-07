@@ -79,7 +79,7 @@ module.exports = {
       publicPath: (src, name) => {
         // console.log(src, name)
         src = src.indexOf('/') == 0 ? src : '/' + src;
-        return ['index', 'categories', 'video', 'tools', 'my'].indexOf(name) != -1 ? '.' + src : '..' + src;
+        return ['index', 'categories', 'video', 'tools', 'my', 'ui'].indexOf(name) != -1 ? '.' + src : '..' + src;
       }
     })
   ]

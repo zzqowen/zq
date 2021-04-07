@@ -79,7 +79,7 @@ module.exports = {
       }
 
       fileObj.html.push(new HtmlWebpackPlugin({
-        filename: (['index', 'categories', 'video', 'tools', 'my'].indexOf(key) != -1 ? '' : 'html/') + name.replace('.pug', '.html'),
+        filename: (['index', 'categories', 'video', 'tools', 'my', 'ui'].indexOf(key) != -1 ? '' : 'html/') + name.replace('.pug', '.html'),
         template: item,
         chunks: chunks,
         templateParameters: {

@@ -21,6 +21,10 @@ export default {
       label: '影视',
       title: '搜搜看'
     },
+    ui: {
+      label: 'UI',
+      title: 'UI'
+    },
     videoDetail: {
       title: '视频详情'
     }
