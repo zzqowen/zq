@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,58 +11,66 @@
       margin: 0;
       padding: 0;
     }
-    html, body {
-      width: 100%;
-      height: 100%;
-      writing-mode:vertical-lr;
-      -webkit-writing-mode:vertical-lr;
-      -ms-writing-mode: tb-rl;
-      overflow: hidden;
+
+    .t {
+      text-align: center;
+      position: relative;
+      writing-mode: vertical-lr;
+      direction: ltr;
     }
-    body:after {
+
+    .t:after {
       content: '';
       display: block;
       clear: both;
     }
-    .l {
-      height: 200px;
-      background-color: #ccc;
-      width: 100%;
-      float: left;
-      writing-mode: horizontal-tb;
-      -webkit-writing-mode: horizontal-tb;
-      -ms-writing-mode: lr-tb;
-    }
+
+    .l,
     .r {
-      overflow: hidden;
-      background-color: #f3f3f3;
-      width: 100%;
-      position: relative;
-    }
-    .r-content {
+      line-height: 30px;
       writing-mode: horizontal-tb;
-      -webkit-writing-mode: horizontal-tb;
-      -ms-writing-mode: lr-tb;
-      width: 100%;
-      height: 100%;
+
+      vertical-align: top;
+    }
+
+    .l {
       background-color: blue;
+
+    }
+
+    .r {
+      background-color: green;
+    }
+
+    #btn {
+      position: absolute;
+      top: 0;
+      right: 0;
     }
   </style>
 </head>
+
 <body>
-  <div class="l">
-    拉了多少分999Iii
-  </div>
-  <div class="r">
-    <div class="r-content">
-      adjla了就爱的
+  <div class="t">
+    <div>
+
+      <div class="l" id="l">
+        99999
+      </div>
+    </div>
+    <div style="background-color: green;">
+
+      <div class="r">
+        888888888
+      </div>
     </div>
   </div>
+  <button id='btn'>dadafdf</button>
   <script>
-      var str = '<head><meta charset="UTF-8"><link href="../../css/app-28bd87.css" rel="stylesheet"><link href="./../css/index-c50414.css" rel="stylesheet"></head><body><a href="node.html"></a><div id="zq"><div class="zq-header"><div class="zq-header-box inline-block-middle"><div class="zq-logo"><a class="zq-logo-text" href="/">皮一下</a></div><div class="zq-nav inline-block-middle"><div class="zq-nav-item"><a class="zq-nav-a zq-nav-a-cur" href="/index.html" title="[object Object]"><div class="zq-nav-a-img" style="background-image: url(../img/img.17fc0d0.png); background-position: -54px 0"></div>首页</a></div><div class="zq-nav-item"><a class="zq-nav-a" href="/categories.html" title="[object Object]"><div class="zq-nav-a-img" style="background-image: url(../img/img.17fc0d0.png); background-position: -36px 0"></div>分类</a></div><div class="zq-nav-item"><a class="zq-nav-a" href="/tools.html" title="[object Object]"><div class="zq-nav-a-img" style="background-image: url(../img/img.17fc0d0.png); background-position: -18px 0"></div>工具</a></div><div class="zq-nav-item"><a class="zq-nav-a" href="/video.html" title="[object Object]"><div class="zq-nav-a-img" style="background-image: url(../img/img.17fc0d0.png); background-position: -72px 0"></div>影视</a></div><div class="zq-nav-item"><a class="zq-nav-a" href="/my.html" title="[object Object]"><div class="zq-nav-a-img" style="background-image: url(../img/img.17fc0d0.png); background-position: 0px 0"></div>我的</a></div></div></div></div><div class="zq-home-banner"></div><div class="zq-content"><analoginput class="analogInput"></analoginput></div></div><script src="./../js/app-03c62c.js"><script src="./../js/index-63e8a1.js">';
-      var r = /(?<=(href\s*=|src\s*=|url\()\s*("|'|\s*))(?!["']).+?(?="|'|["']?\))/g;
-      console.log(str.match(r));
-      console.log(r.test(str), RegExp.$1)
+    btn.onclick = function () {
+      l.innerHTML += '<p>立刻就阿里的开放接口类似的</p>'
+    }
   </script>
 </body>
+
 </html>

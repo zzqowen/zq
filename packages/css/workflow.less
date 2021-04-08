@@ -1,4 +1,6 @@
-@--statusColorList: transparent, @title-gray-bg, @warning, @primary;
+@--statusColorList: black, @title-gray-bg, @warning, @primary;
+@--flow-line: #CACACA;
+@--flow-bg: #f3f3f3;
 
 * {
   margin: 0;
@@ -24,6 +26,7 @@
   width: 220px;
   cursor: pointer;
   position: relative;
+  margin: 0 auto;
 
   .zq-workflow__close {
     background-color: transparent;
@@ -81,6 +84,7 @@
       .zq-workflow__header_icon {
         margin-right: 5px;
         height: 24px;
+
         & svg {
           margin-top: 4px;
         }
@@ -132,5 +136,185 @@
         }
       }
     }
+  }
+}
+
+.zq-workflow__route_box {
+  position: relative;
+  padding-top: 16px;
+
+  .zq-workflow__route {
+    white-space: nowrap;
+    position: relative;
+    min-height: 160px;
+    display: table;
+    margin: 0 auto;
+
+    .zq-workflow__condition {
+      display: table-cell;
+      background-color: @--flow-bg;
+      border-top: 2px solid @--flow-line;
+      border-bottom: 2px solid @--flow-line;
+      position: relative;
+
+      .coverLine() {
+        position: absolute;
+        width: 50%;
+        height: 2px;
+        background-color: @--flow-bg;
+      }
+
+      .zq-workflow__cover_left_top_line {
+        .coverLine();
+        top: -2px;
+        left: -1px;
+      }
+
+      .zq-workflow__cover_left_bottom_line {
+        .coverLine();
+        bottom: -2px;
+        left: -1px;
+      }
+
+      .zq-workflow__cover_right_top_line {
+        .coverLine();
+        top: -2px;
+        right: -1px;
+      }
+
+      .zq-workflow__cover_right_bottom_line {
+        .coverLine();
+        bottom: -2px;
+        right: -1px;
+      }
+    }
+
+    .zq-workflow_arrow-trangle {
+      text-align: center;
+      font-size: 0;
+      position: relative;
+      bottom: -5px;
+      &:after {
+        content: '';
+        background-color: @--flow-bg;
+        display: inline-block;
+        border: 8px solid transparent;
+        border-top-color: @--flow-line;
+      }
+    }
+
+    .zq-workflow__approver {}
+
+    .zq-workflow__condition_node {
+      padding: 30px 50px 0;
+      position: relative;
+
+      height: 100%;
+    }
+  }
+}
+
+.line-box {
+  position: relative;
+  min-height: 160px;
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    .trbl();
+    width: 2px;
+    height: 100%;
+    margin: auto;
+    background-color: @--flow-line;
+  }
+}
+
+.zq-workflow__btn_box {
+  width: 240px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+
+  .zq-workflow__btn {
+    padding: 20px 0 32px;
+    min-height: auto;
+
+    .zq-workflow_btn_plus {
+      width: 30px;
+      height: 30px;
+      position: relative;
+      background-color: @primary;
+      border-radius: 50%;
+      margin: auto;
+      cursor: pointer;
+
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        .trbl();
+        margin: auto;
+        height: 2px;
+        width: 13.8px;
+        border-radius: 2px;
+        background-color: white;
+      }
+
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        .trbl();
+        margin: auto;
+        height: 13.8px;
+        width: 2px;
+        border-radius: 2px;
+        background-color: white;
+      }
+    }
+  }
+}
+
+.zq-workflow__add_condition {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 15px;
+  font-size: 12px;
+  color: @primary;
+  background-color: white;
+  box-shadow: 0 0 4px 0 fade(black, 40%);
+  text-align: center;
+  width: 68px;
+  margin-left: -34px;
+  cursor: pointer;
+  transition: 300ms;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
+.zq-workflow_end {
+  &:before {
+    content: '';
+    display: block;
+    margin: 0 auto;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: @--flow-line;
+  }
+  &:after {
+    content: '流程结束';
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 6px;
+    color: @--flow-line;
+    font-size: 12px;
   }
 }

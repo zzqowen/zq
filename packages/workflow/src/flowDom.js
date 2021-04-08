@@ -56,10 +56,10 @@ let head = (type) => {
   </div>`
 }
 
-let content = (type) => {
+let content = (value) => {
   return `<div class="zq-workflow__content">
   <div class="zq-workflow__content_txt">
-    <div class="one-line-ellipsis">爱对了就爱上了离开拉萨看到飞机上看到就付了款手机费卢卡斯解放了恐惧爱上课了粉色款付了款是否就快啦沙发上飞机开始上课发生法律是法拉利</div>
+    <div class="one-line-ellipsis">${value || '请选择'}</div>
   </div>
   </div>`
 }
@@ -68,7 +68,8 @@ let flowBox = (options) => {
   let opt = options || {closeable: true};
   let {
     type,
-    closeable
+    closeable,
+    value
   } = opt;
 
   let fDom = newDom('div', `zq-workflow__container`);
@@ -76,7 +77,7 @@ let flowBox = (options) => {
   let fcDom = newDom('div', `zq-workflow__container_content`);
 
 
-  fcDom.innerHTML = head(type) + content();
+  fcDom.innerHTML = head(type) + content(value);
   appendNode(fDom, fcDom);
   return fDom;
 }
