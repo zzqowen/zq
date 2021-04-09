@@ -1,12 +1,25 @@
 import {
   getStyle,
   addEventListener,
-  removeEventListener
+  removeEventListener,
+  trim
 } from "../compatibility";
 import {
   isUndefined,
   likeArrToArr
 } from "../tool";
+
+export const getScreenInfo = () => {
+  const docEle = document.documentElement;
+  const bodyEle = document.body;
+  const screenE = window.screen;
+  return {
+    width: docEle.offsetWidth || bodyEle.offsetWidth,
+    height: docEle.offsetHeight || bodyEle.offsetHeight,
+    screenWidth: screenE.width,
+    screenHeight: screenE.height,
+  }
+}
 
 export const getElement = (el, context) => {
   let dom = null;
@@ -34,13 +47,27 @@ export const removeNode = (childNode, parent) => {
 }
 
 export const setClassList = (node, classStr, type) => {
+  let nodeStr = node.getAttribute("class") || '';
+  let cStr = classStr || '';
+  let classList = cStr.split(" ").map(item => trim(item)).filter(item => item != "");
+  let nodeClassList = nodeStr.split(" ").map(item => trim(item)).filter(item => item != "");
+
   if (type === "replace") {
-    node.setAttribute("class", classStr);
+    node.setAttribute("class", cStr);
   } else if (type === "remove") {
-    let str = node.getAttribute("class").split(" ").filter((item, index) => item != classStr).join(" ");
+    let str = nodeClassList.filter((item, index) => classList.indexOf(item) == -1).join(" ");
     node.setAttribute("class", str);
   } else {
-    node.setAttribute("class", (node.getAttribute("class") ? node.getAttribute("class") + " " : "") + classStr);
+    let filterObj = {};
+    let nStr = nodeClassList.concat(classList).filter((item) => {
+      if (!filterObj[item]) {
+        filterObj[item] = true;
+        return true;
+      } else {
+        return false;
+      }
+    }).join(' ');
+    node.setAttribute("class", nStr);
   }
 }
 
@@ -66,8 +93,8 @@ export const domView = (ele) => {
     }
   }
 
-  ele.offset = () => {
-    let el = ele;
+  ele.offset = function () {
+    let el = this;
     let box = el.getBoundingClientRect();
     let offsetObj = {
       top: box.top,
@@ -98,7 +125,6 @@ export const addEvent = (ele, ev, fun, modifiers) => {
         fun.call(ele, eve);
         break;
       case "stop":
-        console.log(e, '阻止冒泡');
         eve.stopPropagation(); //阻止冒泡
         fun.call(ele, eve);
         break;

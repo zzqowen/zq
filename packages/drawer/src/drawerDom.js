@@ -35,8 +35,9 @@ export default (el, params) => {
 
   function closeDialog(bodyDom, maskDom) {
     setClassList(maskDom, "ani-opacity-active", 'remove');
-    setClassList(bodyDom, "ani-drawer-"+ direction +"-active", 'remove');
+    setClassList(bodyDom, "ani-drawer-" + direction + "-active", 'remove');
     setTimeout(() => {
+      setClassList(el, 'zq-drawer-container-block', 'remove');
       removeNode(el);
       onCallBack('hide');
     }, 300);
@@ -44,10 +45,11 @@ export default (el, params) => {
 
   let initMethods = (bodyDom, maskDom) => {
     el.show = function () {
+      setClassList(el, 'zq-drawer-container-block');
       appendNode(document.body, el);
       setTimeout(function () {
         setClassList(maskDom, "ani-opacity-active");
-        setClassList(bodyDom, "ani-drawer-"+ direction +"-active");
+        setClassList(bodyDom, "ani-drawer-" + direction + "-active");
         onCallBack('show');
       }, 1)
     }
@@ -57,9 +59,6 @@ export default (el, params) => {
     }
   }
 
-
-
-
   let drawerDom = () => {
     // console.log(el);
     let drawerBodyDom = newDom('div', 'zq-drawer-body ani-drawer-' + direction + ' zq-drawer-body-' + params.direction);
@@ -67,7 +66,7 @@ export default (el, params) => {
     appendNode(drawerBodyDom, getChildNodes(el));
     appendNode(el, drawerMaskDom);
     appendNode(el, drawerBodyDom);
-    setClassList(el, 'zq-drawer-container-block'); //默认隐藏 初始化显示
+    setClassList(el, 'zq-drawer-container'); //默认隐藏 初始化显示
     // removeNode(el);
     onCallBack('init');
     initMethods(drawerBodyDom, drawerMaskDom);

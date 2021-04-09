@@ -6,6 +6,7 @@ import menu from "@/menu";
 import swiper from "@/swiper";
 // import video from "@/video";
 import drawer from "@/drawer";
+import popover from "@/popover";
 import workflow from "@/workflow";
 
 export default {
@@ -15,5 +16,6 @@ export default {
   menu,
   swiper,
   drawer,
+  popover,
   workflow
 }

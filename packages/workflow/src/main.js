@@ -13,6 +13,7 @@ import {
 import {
   isEmpty
 } from "tools/tool";
+import genId from "tools/hash/hashSum";
 import defaultOptions from "./options";
 import flowDom from './flowDom';
 import testData from './data';

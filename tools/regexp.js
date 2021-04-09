@@ -1,0 +1,1 @@
+export const clearLRSpace = /(^[\s\n\t]+)|([\s\n\t]+$)/g

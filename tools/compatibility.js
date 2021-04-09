@@ -1,4 +1,4 @@
-
+import {clearLRSpace} from './regexp';
 
 export const getStyle = (ele, attr) => {
   if (ele.currentStyle) {
@@ -60,5 +60,13 @@ export const ZObject = {
       return target;
     };
     return _extends.apply({}, arguments);
+  }
+}
+
+export const trim = (str) => {
+  if (String.prototype.trim) {
+    return str.trim()
+  } else {
+    return str.replace(clearLRSpace, '')
   }
 }
