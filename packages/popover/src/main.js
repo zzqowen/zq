@@ -26,7 +26,7 @@ import popoverDom from './popoverDom';
 
 let popover = (el, options) => {
   var paramsAll = initElParams(el, options, defaultOptions);
-  console.log(paramsAll);
+  // console.log(paramsAll);
   let allPopover = [];
   for (let i = 0, len = paramsAll.el.length; i < len; i++) {
     let elDom = paramsAll.el[i];

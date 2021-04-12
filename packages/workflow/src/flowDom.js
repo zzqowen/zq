@@ -33,6 +33,10 @@ let flowStatusList = [{
     label: '抄送人',
     icon: 6
   },
+  {
+    label: '办理人',
+    icon: 6
+  },
 ]
 
 let svgDom = {

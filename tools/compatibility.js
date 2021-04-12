@@ -8,9 +8,9 @@ export const getStyle = (ele, attr) => {
   }
 }
 
-export const addEventListener = (ele, ev, fun) => {
+export const addEventListener = (ele, ev, fun, bool) => {
   if (ele.addEventListener) {
-    ele.addEventListener(ev, fun, false);
+    ele.addEventListener(ev, fun, !!bool);
   } else if (ele.attachEvent) {
     ele.attachEvent(`on${ev}`, fun);
   }

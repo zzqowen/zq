@@ -4,5 +4,7 @@ export default {
   title: '',
   direction: 'bottom',
   trigger: 'hover',
+  status: false,
+  trangleStatus: true,
   onCallBack: function() {}
 }

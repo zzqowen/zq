@@ -14,15 +14,35 @@ import {
   isEmpty
 } from "tools/tool";
 import genId from "tools/hash/hashSum";
-import defaultOptions from "./options";
+import defaultOptions, {
+  addList
+} from "./options";
 import flowDom from './flowDom';
 import testData from './data';
+import popover from '@/popover'
 
 let addBtn = () => {
-  let aBBtn = newDom('div', `zq-workflow__btn_box`);
-  let bBtn = newDom('div', `zq-workflow__btn line-box`);
-  bBtn.innerHTML = `<div class="zq-workflow_btn_plus"></div>`
-  appendNode(aBBtn, bBtn);
+  let aBBtn = newDom('div', `zq-workflow__btn_box line-box`);
+  let bBtn = newDom('div', `zq-workflow__btn`);
+  bBtn.innerHTML = `<div class="zq-workflow_btn_plus" slot="reference"></div>`;
+
+  let addTypeBox = newDom('div', 'zq-workflow_add_type_box')
+
+  for (let i = 0; i < addList.length; i++) {
+    let item = addList[i];
+    let listBtn = newDom('div', 'zq-workflow_add_type');
+    listBtn.innerHTML = `<div class="zq-workflow_add_type_content zq-workflow_add_type_${item.color}"><i class="zq-workflow_type_svg">${item.svg}</i><span class="zq-workflow_add_type_txt">${item.label}</span></div>`;
+    appendNode(addTypeBox, listBtn);
+  }
+  appendNode(bBtn, addTypeBox);
+
+  appendNode(aBBtn, popover(bBtn, {
+    direction: 'right-start',
+    trangleStatus: false,
+    trigger: 'click'
+  }));
+  // console.log('addd', popover(aBBtn))
+
   return aBBtn;
 }
 
@@ -46,7 +66,7 @@ let endWorkFlow = () => {
   return newDom('div', 'zq-workflow_end')
 }
 
-let flowEl = (el) => {
+let flowEl = (el, options) => {
   let han = function (preEl, cNode) {
     if (cNode.type == 'route') {
       let conditionNode = cNode.conditionNodes;
@@ -65,15 +85,15 @@ let flowEl = (el) => {
 
           appendNode(nodeDom, addBtn());
 
-          if(i == 0) {
+          if (i == 0) {
             let coverLineList = coverLine('left');
-            console.log(coverLineList)
+            // console.log(coverLineList)
             for (let j in coverLineList) {
               appendNode(conditionDom, coverLineList[j]);
             }
           }
 
-          if(i == conditionNode.length - 1) {
+          if (i == conditionNode.length - 1) {
             let coverLineList = coverLine('right');
             for (let j in coverLineList) {
               appendNode(conditionDom, coverLineList[j]);
@@ -139,9 +159,7 @@ export default function (el, options) {
   let paramsAll = initElParams(el, options, defaultOptions);
   for (let i = 0, len = paramsAll.el.length; i < len; i++) {
     let elItem = paramsAll.el[i];
-    flowEl(elItem)
+    setClassList(elItem, 'zq-workflow-box')
+    flowEl(elItem, options)
   }
-
-
-  console.log(paramsAll.el);
 }

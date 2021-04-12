@@ -31,6 +31,10 @@ export const isUndefined = function (obj) {
   return typeof obj == 'undefined';
 };
 
+export const isBoolean = function (obj) {
+  return typeof obj == 'boolean';
+};
+
 export const isFunction = function (obj) {
   return typeof obj == 'function';
 };

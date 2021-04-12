@@ -2,11 +2,6 @@
 @--flow-line: #CACACA;
 @--flow-bg: #f3f3f3;
 
-* {
-  margin: 0;
-  padding: 0;
-}
-
 .loopStatus(@sIndex: 1) when (@sIndex <=length(@--statusColorList)) {
   @value: extract(@--statusColorList, @sIndex);
 
@@ -20,7 +15,9 @@
   .loopStatus(@sIndex + 1);
 }
 
-
+.zq-workflow-box {
+  min-width: min-content;
+}
 
 .zq-workflow__container {
   width: 220px;
@@ -156,6 +153,7 @@
       border-top: 2px solid @--flow-line;
       border-bottom: 2px solid @--flow-line;
       position: relative;
+      height: 100%;
 
       .coverLine() {
         position: absolute;
@@ -194,6 +192,7 @@
       font-size: 0;
       position: relative;
       bottom: -5px;
+
       &:after {
         content: '';
         background-color: @--flow-bg;
@@ -235,10 +234,13 @@
   margin: 0 auto;
   position: relative;
   z-index: 10;
+  padding: 20px 0 32px;
+  text-align: center;
+  min-height: auto;
 
   .zq-workflow__btn {
-    padding: 20px 0 32px;
-    min-height: auto;
+    display: inline-block;
+    vertical-align: top;
 
     .zq-workflow_btn_plus {
       width: 30px;
@@ -308,6 +310,7 @@
     border-radius: 4px;
     background-color: @--flow-line;
   }
+
   &:after {
     content: '流程结束';
     display: block;
@@ -316,5 +319,74 @@
     margin-top: 6px;
     color: @--flow-line;
     font-size: 12px;
+  }
+}
+
+.zq-workflow_add_type_box {
+  max-width: 360px;
+  padding: 12px 8px 12px 16px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 2px 12px 0px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+
+  .zq-workflow_add_type {
+    display: inline-block;
+    margin-bottom: 8px;
+    margin-right: 8px;
+  }
+
+  .zq-workflow_add_type_content {
+    background-color: @workflow-type-bg;
+    line-height: 40px;
+    font-size: 14px;
+    padding: 8px;
+    border-radius: 5px;
+    width: 160px;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+
+    &:hover {
+      border-color: #ecedef;
+      box-shadow: 0 2px 8px 0 rgba(17, 31, 44, 0.08);
+    }
+
+    .zq-workflow_type_svg {
+      width: 40px;
+      height: 40px;
+      display: inline-block;
+      border: 1px solid @color-e;
+      border-radius: 18px;
+      font-size: 18px;
+      text-align: center;
+      background-color: white;
+      margin-right: 12px;
+
+      svg {
+        margin-top: 9px;
+        vertical-align: top;
+      }
+    }
+
+    &.zq-workflow_add_type_success {
+      color: @success
+    }
+
+    &.zq-workflow_add_type_danger {
+      color: @danger
+    }
+
+    &.zq-workflow_add_type_primary {
+      color: @primary
+    }
+
+    &.zq-workflow_add_type_warning {
+      color: @warning
+    }
+
+    .zq-workflow_add_type_txt {
+      color: @main-text-default;
+      // vertical-align: top;
+    }
   }
 }

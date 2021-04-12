@@ -24,14 +24,20 @@ import {
   getStyle
 } from 'tools/compatibility';
 
-export default (el, params) => {
-  console.log(el, params)
+export default (ele, params) => {
+  // console.log(el, params)
+  let el = domView(ele);
+
   let {
     title,
     text,
     direction,
-    trigger
+    trigger,
+    status,
+    trangleStatus
   } = params;
+
+  let popoverEl = null;
 
   title = el.getAttribute('title') || title;
   text = el.getAttribute('text') || text;
@@ -42,7 +48,7 @@ export default (el, params) => {
     let referenceEle;
     for (var i = 0, len = elChild.childNodes.length; i < len; i++) {
       var cNode = elChild.childNodes[i];
-      if (cNode.getAttribute && cNode.getAttribute('slot') == 'reference') {
+      if (cNode && cNode.getAttribute && cNode.getAttribute('slot') == 'reference') {
         cNode.removeAttribute('slot');
         if (isEmpty(referenceEle)) referenceEle = cNode;
         elChild.removeChild(cNode)
@@ -55,30 +61,36 @@ export default (el, params) => {
     }
   }
 
-  let popoverShow = (popoverDom) => {
+  let popoverHide = (popoverDom) => {
+    status = false;
     popoverDom.css({
-      display: popoverDom.css('display') == 'none' ? 'block' : 'none'
+      display: 'none',
+      top: '-9999px',
+      left: 0
     });
-    setTimeout(() => {
-      resetPopoverPosition(popoverDom);
-    })
   }
 
-  let popoverHide = (popoverDom) => {
-    popoverDom.css({
-      display: 'none'
-    })
+  let popoverShow = (popoverDom) => {
+    status = true;
+    if (!(popoverDom.css('display') == 'none')) {
+      popoverHide(popoverDom)
+    } else {
+      popoverDom.css({
+        display: 'block'
+      });
+      resetPopoverPosition(popoverDom)
+    }
   }
 
   let initMethod = (popoverDom) => {
     if (trigger == 'click') {
-      addEvent(el, 'click', function () {
+      addEvent(el, 'click', function (e) {
         popoverShow(popoverDom)
       }, 'stop');
       addEvent(popoverDom, 'click', function () {
 
       }, 'stop');
-      addEvent(document.body, 'click', function () {
+      addEvent(document.body, 'click', function (e) {
         popoverHide(popoverDom)
       })
     }
@@ -96,13 +108,20 @@ export default (el, params) => {
         popoverHide(popoverDom)
       }, 'stop');
     }
+
+    addEvent(window, 'scroll', function () {
+      // popoverHide(popoverDom)
+      if (status) resetPopoverPosition(popoverDom)
+    }, true)
   }
 
-  let resetPopoverPosition = (dom) => {
+  let resetPopoverPosition = (domEl) => {
+    let dom = domEl || popoverEl;
+
     let screenInfo = getScreenInfo();
     let elInfo = el.offset();
     let selfInfo = dom.offset();
-    console.log(screenInfo, elInfo, selfInfo);
+    // console.log(screenInfo, elInfo, selfInfo);
 
     let drt = direction.split('-')[0];
     let placePos = direction.split('-')[1];
@@ -117,7 +136,7 @@ export default (el, params) => {
     let rightWidth = screenInfo.width - elInfo.left - elInfo.width;
     let curWidth = selfInfo.width + trangleSize;
 
-    switch (direction) {
+    switch (drt) {
       case 'top':
         if (bottomHeight >= curHeight && topHeight < curHeight) drt = 'bottom';
         break;
@@ -128,11 +147,9 @@ export default (el, params) => {
         if (rightWidth >= curWidth && leftWidth < curWidth) drt = 'right';
         break;
       case 'right':
-        if (leftWidth >= curHeight && rightWidth < curHeight) drt = 'left';
+        if (leftWidth >= curWidth && rightWidth < curWidth) drt = 'left';
         break;
     }
-
-    console.log(rightWidth, curWidth, leftWidth, curHeight);
 
     let realTop, realLeft;
     switch (drt) {
@@ -165,7 +182,7 @@ export default (el, params) => {
       if (placePos == 'end') realTop = elInfo.top - (selfInfo.height - elInfo.height);
     }
 
-    console.log(drt, placePos)
+    // console.log(drt, placePos)
 
     let removeDrt = drt;
     if (drt == 'left') removeDrt = 'right';
@@ -173,17 +190,16 @@ export default (el, params) => {
     if (drt == 'top') removeDrt = 'bottom';
     if (drt == 'bottom') removeDrt = 'top';
 
-    setClassList(dom, `zq-popover-${removeDrt}${placePos ? '-' + placePos : ''}`, 'remove')
-    setClassList(dom, `zq-popover-${drt}${placePos ? '-' + placePos : ''} zq-popover-trangle`);
+    setClassList(dom, `zq-popover-${removeDrt} zq-popover-${removeDrt}${placePos ? '-' + placePos : ''}`, 'remove')
+    setClassList(dom, `zq-popover-${drt} zq-popover-${drt}${placePos ? '-' + placePos : ''} zq-popover-trangle`);
 
     dom.css({
       top: realTop + 'px',
       left: realLeft + 'px'
-    })
+    });
   }
 
   let popoverPopup = (child) => {
-    console.log('chillll', child.childNodes)
     var popoverBox = newDom('div', 'zq-popover');
     if (child.childNodes.length == 0) {
       popoverBox.innerHTML = `<div class="zq-popover-title">${title}</div>`;
@@ -202,14 +218,16 @@ export default (el, params) => {
     } else {
       el.innerHTML = text || '';
     }
-    console.log(domView(el).offset());
     let popoverD = popoverPopup(initData.child);
+    setClassList(popoverD, !trangleStatus ? `zq-popover-trangle-hidden` : '');
     appendNode(document.body, popoverD);
-
+    popoverEl = popoverD;
     initMethod(popoverD);
-
+    if (status) popoverShow(popoverD)
     return el;
   }
+
+  el.reset = resetPopoverPosition;
 
   return popoverDom();
 }

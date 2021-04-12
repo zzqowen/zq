@@ -6,7 +6,8 @@ import {
 } from "../compatibility";
 import {
   isUndefined,
-  likeArrToArr
+  likeArrToArr,
+  isBoolean
 } from "../tool";
 
 export const getScreenInfo = () => {
@@ -135,7 +136,12 @@ export const addEvent = (ele, ev, fun, modifiers) => {
     return ele;
   };
 
-  addEventListener(ele, ev, evListen);
+  if (isBoolean(modifiers)) {
+    addEventListener(ele, ev, evListen, modifiers);
+  } else {
+    addEventListener(ele, ev, evListen);
+  }
+
 }
 
 export const delEvent = (ele, ev, fun) => {
