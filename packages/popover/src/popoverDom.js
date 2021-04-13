@@ -61,51 +61,54 @@ export default (ele, params) => {
     }
   }
 
-  let popoverHide = (popoverDom) => {
+  let popoverHide = (dom) => {
+    let pDom = dom || popoverEl;
     status = false;
-    popoverDom.css({
+    pDom.css({
       display: 'none',
       top: '-9999px',
       left: 0
     });
   }
 
-  let popoverShow = (popoverDom) => {
+  let popoverShow = (dom) => {
+    let pDom = dom || popoverEl;
     status = true;
-    if (!(popoverDom.css('display') == 'none')) {
-      popoverHide(popoverDom)
+    if (!(pDom.css('display') == 'none')) {
+      popoverHide(pDom)
     } else {
-      popoverDom.css({
+      pDom.css({
         display: 'block'
       });
-      resetPopoverPosition(popoverDom)
+      resetPopoverPosition(pDom)
     }
   }
 
-  let initMethod = (popoverDom) => {
+  let initMethod = (dom) => {
+    let pDom = dom || popoverEl;
     if (trigger == 'click') {
       addEvent(el, 'click', function (e) {
-        popoverShow(popoverDom)
+        popoverShow(pDom)
       }, 'stop');
-      addEvent(popoverDom, 'click', function () {
+      addEvent(pDom, 'click', function () {
 
       }, 'stop');
       addEvent(document.body, 'click', function (e) {
-        popoverHide(popoverDom)
+        popoverHide(pDom)
       })
     }
     if (trigger == 'hover') {
       addEvent(el, 'mouseover', function () {
-        popoverShow(popoverDom)
+        popoverShow(pDom)
       }, 'stop');
-      addEvent(popoverDom, 'mouseover', function () {
-        popoverShow(popoverDom)
+      addEvent(pDom, 'mouseover', function () {
+        popoverShow(pDom)
       }, 'stop');
       addEvent(el, 'mouseout', function () {
-        popoverHide(popoverDom)
+        popoverHide(pDom)
       }, 'stop');
-      addEvent(popoverDom, 'mouseout', function () {
-        popoverHide(popoverDom)
+      addEvent(pDom, 'mouseout', function () {
+        popoverHide(pDom)
       }, 'stop');
     }
 
@@ -228,6 +231,7 @@ export default (ele, params) => {
   }
 
   el.reset = resetPopoverPosition;
+  el.hide = popoverHide;
 
   return popoverDom();
 }

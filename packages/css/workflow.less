@@ -1,13 +1,13 @@
-@--statusColorList: black, @title-gray-bg, @warning, @primary;
+@--statusColorList: black, @title-gray-bg, @warning, @primary, @danger;
+@--statusTypeList: route, start, approver, notifier, audit;
 @--flow-line: #CACACA;
 @--flow-bg: #f3f3f3;
 
 .loopStatus(@sIndex: 1) when (@sIndex <=length(@--statusColorList)) {
   @value: extract(@--statusColorList, @sIndex);
+  @type: extract(@--statusTypeList, @sIndex);
 
-  @calcIndex: @sIndex - 1;
-
-  .zq-workflow__header_@{calcIndex} {
+  .zq-workflow__header_@{type} {
     background-color: @value;
     color: white;
   }
@@ -187,20 +187,7 @@
       }
     }
 
-    .zq-workflow_arrow-trangle {
-      text-align: center;
-      font-size: 0;
-      position: relative;
-      bottom: -5px;
 
-      &:after {
-        content: '';
-        background-color: @--flow-bg;
-        display: inline-block;
-        border: 8px solid transparent;
-        border-top-color: @--flow-line;
-      }
-    }
 
     .zq-workflow__approver {}
 
@@ -210,6 +197,21 @@
 
       height: 100%;
     }
+  }
+}
+
+.zq-workflow_arrow-trangle {
+  text-align: center;
+  font-size: 0;
+  position: relative;
+  bottom: -5px;
+
+  &:after {
+    content: '';
+    background-color: @--flow-bg;
+    display: inline-block;
+    border: 8px solid transparent;
+    border-top-color: @--flow-line;
   }
 }
 

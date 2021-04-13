@@ -14,7 +14,6 @@ export const isFirefox = function () {
   return !!window.navigator.userAgent.match(/firefox/i);
 };
 
-
 export const likeArrToArr = (likeArr) => {
   if (Array.prototype.slice) {
     return Array.prototype.slice.call(likeArr);

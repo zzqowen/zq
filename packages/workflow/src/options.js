@@ -2,7 +2,7 @@ export default {
   el: null
 }
 
-export const addList = [{
+export const addTypeList = [{
     label: '审批人',
     hasIcon: true,
     type: 'approver',
