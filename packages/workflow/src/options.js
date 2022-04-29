@@ -1,5 +1,10 @@
 export default {
-  el: null
+  el: null,
+  workflowData: {
+    "name": "发起人",
+    "id": "sid-startevent",
+    "type": "start"
+  }
 }
 
 export const addTypeList = [{

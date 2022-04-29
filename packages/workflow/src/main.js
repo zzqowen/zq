@@ -26,6 +26,11 @@ import testData from './data';
 import popover from '@/popover'
 
 let flowEl = (el, options) => {
+  let {
+    workflowData
+  } = options;
+
+
   let createId = (preId, childId) => {
     let gStr = `${preId || ''}${now()}${childId || ''}`;
     return 'wf_' + genId(gStr);
@@ -33,37 +38,53 @@ let flowEl = (el, options) => {
 
   let resetWorkflow = () => {
     el.innerHTML = '';
-    han(el, testData);
+    han(el, testData, 'start');
     appendNode(el, endWorkFlow());
+    console.log(testData);
   }
 
   let initWorkFlowCondition = (data) => {
+    // console.log(data);
     let dataChild = data.childNode;
     if (dataChild && dataChild.type == 'route') {
-
       let conditionNodes = dataChild.conditionNodes;
       if (isEmpty(conditionNodes)) {
-        if (isArray(conditionNodes) && conditionNodes.length == 0) delete data.conditionNodes;
+        if (isArray(conditionNodes)) delete data.conditionNodes;
       } else if (conditionNodes.length == 1) {
         function repeatChild(child) {
           if (isEmpty(child.childNode)) {
-            dataChild.childNode.parentId = child.id;
-            child.childNode = dataChild.childNode;
+            if (!isEmpty(dataChild.childNode)) {
+              dataChild.childNode.parentId = child.id;
+              child.childNode = dataChild.childNode;
+            }
           } else {
             repeatChild(child.childNode)
           }
         }
         repeatChild(conditionNodes[0]);
-        conditionNodes[0].childNode.parentId = data.id;
-        data.childNode = conditionNodes[0].childNode;
+        if (!isEmpty(conditionNodes[0]) && !isEmpty(conditionNodes[0].childNode)) {
+          conditionNodes[0].childNode.parentId = data.id;
+          data.childNode = conditionNodes[0].childNode;
+        }
+
+        if (isEmpty(dataChild.childNode) && (conditionNodes[0] && isEmpty(conditionNodes[0].childNode))) {
+          delete data.childNode
+        }
+      } else {
+        for (var i in conditionNodes) {
+          initWorkFlowCondition(conditionNodes[i]);
+        }
       }
     }
-    // console.log('可大可', data);
+    // console.log( data);
     return data;
   }
 
-  let han = function (preEl, cNodeData) {
-    let cNode = initWorkFlowCondition(cNodeData)
+  let han = function (preEl, wfData, type) {
+    let cNodeData = wfData.childNode;
+    if (type == 'start') cNodeData = wfData;
+
+    let cNode = initWorkFlowCondition(cNodeData);
     if (cNode.type == 'route') {
       let conditionNode = cNode.conditionNodes;
       if (!isEmpty(conditionNode)) {
@@ -77,7 +98,12 @@ let flowEl = (el, options) => {
           appendNode(nodeDom, new flowDom({
             type: cNode.type,
             value: conditionItem.name,
-            id: conditionItem.id
+            id: conditionItem.id,
+            parentId: conditionItem.parentId,
+            closeCallBack: () => {
+              cNode.conditionNodes.splice(i, 1);
+              resetWorkflow();
+            }
           }));
 
           appendNode(nodeDom, addBtn(conditionItem));
@@ -97,7 +123,7 @@ let flowEl = (el, options) => {
             }
           }
           if (!isEmpty(conditionItem.childNode)) {
-            han(nodeDom, conditionItem.childNode)
+            han(nodeDom, conditionItem)
           }
 
           appendNode(conditionDom, nodeDom)
@@ -122,14 +148,19 @@ let flowEl = (el, options) => {
         type: type,
         value: name,
         closeable: !whetherStart, //发起人不显示close按钮
-        id: cNode.id
+        id: cNode.id,
+        parentId: cNode.parentId,
+        closeCallBack: () => {
+          wfData.childNode = cNode.childNode
+          resetWorkflow();
+        }
       }));
       appendNode(nodeDom, addBtn(cNode)); //添加新增加号按钮
       appendNode(preEl, nodeDom)
     }
 
     if (!isEmpty(cNode.childNode)) {
-      han(preEl, cNode.childNode)
+      han(preEl, cNode)
     }
   }
 
@@ -146,10 +177,6 @@ let flowEl = (el, options) => {
       listBtn.innerHTML = `<div class="zq-workflow_add_type_content zq-workflow_add_type_${item.color}"><i class="zq-workflow_type_svg">${item.svg}</i><span class="zq-workflow_add_type_txt">${item.label}</span></div>`;
       appendNode(addTypeBox, listBtn);
       addEvent(listBtn, 'click', function () {
-        console.log(item, parentItem, testData);
-
-
-
         let eWf = {
           "name": "",
           "type": item.type,
@@ -216,8 +243,6 @@ let flowEl = (el, options) => {
     conBtn.innerText = '添加条件';
 
     addEvent(conBtn, 'click', function () {
-      console.log(conditionArr)
-      console.log(conditionArr);
       conditionArr.push({
         "name": "条件" + len,
         "type": "condition",
@@ -229,8 +254,6 @@ let flowEl = (el, options) => {
       })
       resetWorkflow();
     });
-    console.log(testData)
-
     return conBtn;
   }
 

@@ -1,49 +1,35 @@
 export default {
-  "childNode": {
-    "type": "route",
-    "parentId": "sid-startevent",
-    "id": "1826_2e16",
-    "conditionNodes": [{
-        "name": "条件1",
-        "type": "condition",
-        "parentId": "1826_2e16",
-        "id": "cfc9_10e8",
-        "properties": {
-
-        },
-        "childNode": {
-          "name": "UNKNOWN",
-          "type": "approver",
-          "parentId": "cfc9_10e8",
-          "id": "00e2_e066",
-          "properties": {
-
-          },
-          "childNode": {
-            "name": "UNKNOWN",
-            "type": "notifier",
-            "parentId": "00e2_e066",
-            "id": "8ad9_41ea",
-            "properties": {
-
-            }
-          }
-        }
-      },
-      
-    ],
-    "properties": {},
+    "name": "发起人",
+    "id": "sid-startevent",
+    "type": "start",
     "childNode": {
-      "name": "UNKNOWN",
-      "type": "notifier",
-      "parentId": "1826_2e16",
-      "id": "8494_9dc1",
-      "properties": {
-
-      }
+        "name": "",
+        "type": "route",
+        "parentId": "sid-startevent",
+        "id": "wf_6bea828c",
+        "properties": {},
+        "conditionNodes": [
+            {
+                "name": "条件1",
+                "type": "condition",
+                "parentId": "wf_6bea828c",
+                "id": "wf_61b57661",
+                "properties": {},
+                "childNode": {
+                    "name": "",
+                    "type": "approver",
+                    "parentId": "wf_61b57661",
+                    "id": "wf_bab579b6",
+                    "properties": {}
+                }
+            },
+            {
+                "name": "条件2",
+                "type": "condition",
+                "parentId": "wf_6bea828c",
+                "id": "wf_64d47fc0",
+                "properties": {}
+            }
+        ]
     }
-  },
-  "name": "发起人",
-  "id": "sid-startevent",
-  "type": "start"
 }

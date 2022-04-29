@@ -65,26 +65,25 @@ let content = (value) => {
   </div>`
 }
 
-let flowBox = (options) => {
+let flowDom = (options) => {
   let opt = ZObject.assign({
-    closeable: true
+    closeable: true,
+    closeCallBack: () => {}
   }, options);
   // console.log(opt);
   let {
     type,
     closeable,
     value,
-    id
+    id,
+    parentId,
+    closeCallBack
   } = opt;
 
   // console.log(type, id);
 
-  function close(e) {
-    console.log(e, opt);
-  }
-
   let fDom = newDom('div', `zq-workflow__container`);
-  if (closeable) appendNode(fDom, closeDom(close));
+  if (closeable) appendNode(fDom, closeDom(closeCallBack));
   let fcDom = newDom('div', `zq-workflow__container_content`);
 
 
@@ -93,4 +92,4 @@ let flowBox = (options) => {
   return fDom;
 }
 
-export default flowBox;
+export default flowDom;
